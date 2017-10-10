@@ -1,13 +1,18 @@
 package io.github.rerobika.rf1.service;
 
 import io.github.rerobika.rf1.domain.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
 /**
  * Created by Nandor Magyar on 9/30/17.
+ *
+ * Extension of the default Spring security UserDetails service
+ *
  */
-public interface UserService {
+public interface UserService extends UserDetailsService {
+
     /**
      * Get every user from the system
      * @return user list
@@ -37,4 +42,12 @@ public interface UserService {
      * @return user with the id if exists
      */
     User getUser(long id);
+
+
+    /**
+     * Registers a new user to the database
+     *
+     * @param user user to be created
+     */
+    User register(User user);
 }

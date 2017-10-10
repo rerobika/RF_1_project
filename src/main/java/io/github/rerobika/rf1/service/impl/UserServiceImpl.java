@@ -1,5 +1,9 @@
 package io.github.rerobika.rf1.service.impl;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import io.github.rerobika.rf1.domain.User;
 import io.github.rerobika.rf1.repository.UserRepository;
@@ -38,7 +42,31 @@ class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User register(User user) {
+        user.setRole("ROLE_USER");
+        userRepository.save(user);
+        return user;
+    }
+
+    @Override
     public User getUser(long id) {
         return userRepository.findOne(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+        User user = userRepository.findByEmail(email);
+
+        if(user == null) {
+            return null;
+        }
+
+        List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRole());
+
+        String password = user.getPassword();
+
+        return new org.springframework.security.core.userdetails.User(email, password, auth) {
+        };
     }
 }
