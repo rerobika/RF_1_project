@@ -2,6 +2,7 @@ package io.github.rerobika.rf1.domain;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -13,13 +14,34 @@ import java.util.List;
  */
 @Entity
 public class User {
-
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
 
     private String name;
+    
+    private String password;
+    
+    @OneToMany
+    private List<Album> albums;
+    @OneToMany
+    private List<Message> messages;
+    @OneToMany
+    private List<Post> posts;
 
+    @Column(name = "email", unique=true)
+    @Email(message="{register.email.invalid}")
+    @NotBlank(message="{register.email.invalid}")
+    private String email;
+
+    private String plainPassword;
+    private String repeatPassword;
+    private String role;
+
+
+    public User() {}
+
+    public User(String name, List<Album> albums, List<Message> messages, List<Post> posts) {
     @Column(name = "email", unique=true)
     @Email(message="{register.email.invalid}")
     @NotBlank(message="{register.email.invalid}")
@@ -41,18 +63,18 @@ public class User {
     @OneToOne
     private Profile profile;
 
-    public User() {}
-
     public User(String name, Profile profile) {
         this.name = name;
-        this.profile = profile;
+        this.albums = albums;
+        this.messages = messages;
+        this.posts = posts;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -64,12 +86,68 @@ public class User {
         this.name = name;
     }
 
-    public Profile getProfile() {
-        return profile;
+    public List<Album> getAlbums() {
+        return albums;
     }
 
-    public void setProfile(Profile profile) {
-        this.profile = profile;
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPlainPassword() {
+        return plainPassword;
+    }
+
+    public void setPlainPassword(String plainPassword) {
+        this.plainPassword = plainPassword;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRepeatPassword() {
+        return repeatPassword;
+    }
+
+    public void setRepeatPassword(String repeatPassword) {
+        this.repeatPassword = repeatPassword;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getEmail() {

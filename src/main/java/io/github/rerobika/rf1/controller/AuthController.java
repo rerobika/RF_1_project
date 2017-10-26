@@ -39,7 +39,6 @@ public class AuthController {
     ModelAndView register(ModelAndView modelAndView) {
 
         User user = new User();
-
         modelAndView.getModel().put("user", user);
         modelAndView.setViewName("app.register");
         return modelAndView;
