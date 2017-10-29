@@ -48,7 +48,7 @@ public class MailServiceImpl implements MailService {
         Context context = new Context();
         context.setVariable("name", "Bob");
 
-        String emailContents = templateEngine.process("verifyemail", context);
+        //String emailContents = templateEngine.process("verifymail", context);
         //todo: process and actually send that mail
         send(null);
     }

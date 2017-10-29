@@ -1,14 +1,19 @@
 package io.github.rerobika.rf1.service.impl;
 
+import io.github.rerobika.rf1.domain.User;
+import io.github.rerobika.rf1.domain.VerificationToken;
+import io.github.rerobika.rf1.exception.EmailExistsException;
+import io.github.rerobika.rf1.repository.UserRepository;
+import io.github.rerobika.rf1.repository.VerificationTokenRepository;
+import io.github.rerobika.rf1.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import io.github.rerobika.rf1.domain.User;
-import io.github.rerobika.rf1.repository.UserRepository;
-import io.github.rerobika.rf1.service.UserService;
 
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -16,8 +21,12 @@ class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    private final VerificationTokenRepository tokenRepository;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, VerificationTokenRepository tokenRepository) {
         this.userRepository = userRepository;
+        this.tokenRepository = tokenRepository;
     }
 
     @Override
@@ -42,10 +51,20 @@ class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User register(User user) {
+    public User register(User user) throws EmailExistsException {
+        if (mailExists(user.getEmail())) {
+            throw new EmailExistsException("There is an account with that email address " + user.getEmail());
+        }
+
         user.setRole("ROLE_USER");
+        user.setEnabled(false);
         userRepository.save(user);
         return user;
+    }
+
+    private boolean mailExists(String email) {
+        User user = userRepository.findByEmail(email);
+        return user!=null;
     }
 
     @Override
@@ -69,4 +88,41 @@ class UserServiceImpl implements UserService {
         return new org.springframework.security.core.userdetails.User(email, password, auth) {
         };
     }
+
+    @Override
+    public void createVerificationToken(User user, String token) {
+        VerificationToken verificationToken = new VerificationToken(token, user);
+        verificationToken.setExpiryDate(verificationToken.calculateExpiryDate());
+        tokenRepository.save(verificationToken);
+    }
+
+    @Override
+    public String validateVerificationToken(String token) {
+        final VerificationToken verificationToken = tokenRepository.findByToken(token);
+        if (verificationToken == null) {
+            return "invalid";
+        }
+
+        final User user = verificationToken.getUser();
+        final Calendar cal = Calendar.getInstance();
+        if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+            tokenRepository.delete(verificationToken);
+            return "expired";
+        }
+
+        user.setEnabled(true);
+        //tokenRepository.delete(verificationToken);
+        userRepository.save(user);
+        return "valid";
+    }
+
+    @Override
+    public User getUser(final String verificationToken) {
+        final VerificationToken token = tokenRepository.findByToken(verificationToken);
+        if (token != null) {
+            return token.getUser();
+        }
+        return null;
+    }
+
 }

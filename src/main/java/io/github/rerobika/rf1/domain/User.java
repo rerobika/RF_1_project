@@ -2,15 +2,20 @@ package io.github.rerobika.rf1.domain;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * Created by Nandor Magyar on 9/30/17.
  */
 @Entity
-public class User {
+public class User implements UserDetails {
+
     @Id
     @GeneratedValue
     private long id;
@@ -30,6 +35,9 @@ public class User {
     @Email(message="{register.email.invalid}")
     @NotBlank(message="{register.email.invalid}")
     private String email;
+
+    @Column(name = "enabled")
+    private boolean enabled;
 
     private String plainPassword;
     private String repeatPassword;
@@ -101,8 +109,36 @@ public class User {
         this.plainPassword = plainPassword;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        GrantedAuthority grantedAuthority = (GrantedAuthority) () -> "ROLE_USER";
+        grantedAuthorities.add(grantedAuthority);
+        return grantedAuthorities;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return getEmail();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return isEnabled();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
     }
 
     public void setPassword(String password) {
@@ -125,4 +161,11 @@ public class User {
         this.role = role;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 }
