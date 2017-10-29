@@ -59,12 +59,19 @@
                     class="icon-bar"></span> <span class="icon-bar"></span> <span
                     class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Yankee</a>
+
+            <sec:authorize access="!isAuthenticated()">
+                <a class="navbar-brand" href="/">Yankee</a>
+                <li><a href="${contextRoot}/members">members</a></li>
+            </sec:authorize>
+
+            <sec:authorize access="isAuthenticated()">
+                <a class="navbar-brand" href="/home">Yankee</a>
+            </sec:authorize>
+
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="${contextRoot}/">Home</a></li>
-                <li><a href="${contextRoot}/about">About</a></li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -75,6 +82,8 @@
                 </sec:authorize>
 
                 <sec:authorize access="isAuthenticated()">
+                    <li><a href="${contextRoot}/home">Home</a></li>
+                    <li><a href="${contextRoot}/profile">Profile</a></li>
                     <li><a href="javascript:$('#logoutForm').submit();">Logout</a></li>
                 </sec:authorize>
 

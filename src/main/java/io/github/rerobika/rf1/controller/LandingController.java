@@ -13,12 +13,27 @@ public class LandingController {
 
     @GetMapping("/")
     ModelAndView home(ModelAndView modelAndView) {
-        modelAndView.setViewName("app.homepage");
+        modelAndView.setViewName("app.about");
         return modelAndView;
     }
 
     @RequestMapping("/about")
     String about() {
         return "app.about";
+    }
+
+    @RequestMapping("/home")
+    String home() {
+        return "app.home";
+    }
+
+    @RequestMapping("/profile")
+    String profile() {
+        return "app.profile";
+    }
+
+    @RequestMapping("/members")
+    String members() {
+        return "app.members";
     }
 }
