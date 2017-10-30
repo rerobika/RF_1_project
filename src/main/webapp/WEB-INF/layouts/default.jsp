@@ -24,21 +24,11 @@
     <!-- Bootswatch flatly theme -->
     <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="${contextRoot}/js/ekko-lightbox.js"></script>
-    <script src="${contextRoot}/js/image-upload.js"></script>
-
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <link href="${contextRoot}/css/style.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="${contextRoot}/css/ekko-lightbox.css" rel="stylesheet">
-    <link href="${contextRoot}/css/font-awesome.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -59,18 +49,12 @@
                     class="icon-bar"></span> <span class="icon-bar"></span> <span
                     class="icon-bar"></span>
             </button>
-
-            <sec:authorize access="!isAuthenticated()">
-                <a class="navbar-brand" href="/">Yankee</a>
-            </sec:authorize>
-
-            <sec:authorize access="isAuthenticated()">
-                <a class="navbar-brand" href="/home">Yankee</a>
-            </sec:authorize>
-
+            <a class="navbar-brand" href="/">Yankee</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
+                <li class="active"><a href="${contextRoot}/">Home</a></li>
+                <li><a href="${contextRoot}/about">About</a></li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -81,8 +65,6 @@
                 </sec:authorize>
 
                 <sec:authorize access="isAuthenticated()">
-                    <li><a href="${contextRoot}/home">Home</a></li>
-                    <li><a href="${contextRoot}/profile">Profile</a></li>
                     <li><a href="javascript:$('#logoutForm').submit();">Logout</a></li>
                 </sec:authorize>
 
@@ -113,5 +95,9 @@
     <tiles:insertAttribute name="content" />
 </div>
 
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 </body>
 </html>

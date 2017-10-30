@@ -25,6 +25,7 @@ public class Post {
         this.parent = parent;
         this.date = date;
     }
+    public Post(){};
 
     public long getId() {
         return id;
