@@ -55,7 +55,7 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/verification/{token}", method = RequestMethod.GET)
-    ModelAndView regVerfiy(@PathVariable String token, ModelAndView modelAndView) {
+    ModelAndView regVerify(@PathVariable String token, ModelAndView modelAndView) {
         String status = userService.validateVerificationToken(token);
         if (status.contentEquals("valid")) {
             modelAndView.setViewName("redirect:/");

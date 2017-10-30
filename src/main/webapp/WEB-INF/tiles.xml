@@ -10,8 +10,8 @@
     </definition>
 
 
-    <definition name="app.homepage" extends="app.default">
-        <put-attribute name="content" value="/WEB-INF/tiles/homepage.jsp" />
+    <definition name="app.home" extends="app.default">
+        <put-attribute name="content" value="/WEB-INF/tiles/home.jsp" />
     </definition>
 
     <definition name="app.profile" extends="app.default">

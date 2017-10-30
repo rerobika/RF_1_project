@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -23,10 +24,14 @@ class UserServiceImpl implements UserService {
 
     private final VerificationTokenRepository tokenRepository;
 
+
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, VerificationTokenRepository tokenRepository) {
+    public UserServiceImpl(UserRepository userRepository, VerificationTokenRepository tokenRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -56,6 +61,7 @@ class UserServiceImpl implements UserService {
             throw new EmailExistsException("There is an account with that email address " + user.getEmail());
         }
 
+        user.setPassword(passwordEncoder.encode(user.getPlainPassword()));
         user.setRole("ROLE_USER");
         user.setEnabled(false);
         userRepository.save(user);

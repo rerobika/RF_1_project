@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class LandingController {
 
     @GetMapping("/")
-    ModelAndView home(ModelAndView modelAndView) {
+    ModelAndView index(ModelAndView modelAndView) {
         modelAndView.setViewName("app.about");
         return modelAndView;
     }
