@@ -62,7 +62,6 @@
 
             <sec:authorize access="!isAuthenticated()">
                 <a class="navbar-brand" href="/">Yankee</a>
-                <li><a href="${contextRoot}/members">members</a></li>
             </sec:authorize>
 
             <sec:authorize access="isAuthenticated()">
