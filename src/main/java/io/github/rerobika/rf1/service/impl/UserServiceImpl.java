@@ -130,5 +130,8 @@ class UserServiceImpl implements UserService {
         }
         return null;
     }
+    public User getUserByEmail(final String email){
+       return  userRepository.findByEmail(email);
+    }
 
 }

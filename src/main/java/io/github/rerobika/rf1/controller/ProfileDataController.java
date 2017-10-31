@@ -5,6 +5,8 @@ import io.github.rerobika.rf1.domain.User;
 import io.github.rerobika.rf1.domain.VerificationToken;
 import io.github.rerobika.rf1.repository.PersonRepository;
 import io.github.rerobika.rf1.repository.UserRepository;
+import io.github.rerobika.rf1.service.PersonService;
+import io.github.rerobika.rf1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,9 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProfileDataController {
 
     @Autowired
-    PersonRepository personRepository;
+    PersonService personService;
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     @GetMapping("/profile")
     ModelAndView profile()
@@ -28,8 +30,8 @@ public class ProfileDataController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("app.profile");
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userRepository.findByEmail(username); //fixme: ad
-        Person person = personRepository.findOne(user.getId());
+        User user = userService.getUser(username); //fixme: ad
+        Person person = personService.getPerson(user.getId());
         modelAndView.addObject("person",person);
         return modelAndView;
     }

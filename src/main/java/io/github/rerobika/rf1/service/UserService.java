@@ -57,4 +57,4 @@ public interface UserService extends UserDetailsService {
     String validateVerificationToken(String token);
 
     User getUser(String verificationToken);
-}
+    }
