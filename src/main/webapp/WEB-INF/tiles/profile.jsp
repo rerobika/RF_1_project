@@ -1,24 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <section>
     <div class="container">
         <div class="row">
             <div class="col-md-8">
                 <div class="profile">
-                    <h1 class="page-header">Douglas Walter</h1>
+                    <h1 class="page-header">${person.user.name}</h1>
                     <div class="row">
                         <div class="col-md-4">
                             <img src="img/user.png" class="img-thumbnail" alt="Profile picture">  <!-- TODO: FIX img src-->
                         </div>
                         <div class="col-md-8">
                             <ul>
-                                <li><strong>Name:</strong>Doug Walter</li>
-                                <li><strong>Email:</strong>doug@gmail.com</li>
-                                <li><strong>City:</strong>Boston</li>
-                                <li><strong>State:</strong>Massachusetts</li>
-                                <li><strong>Gender:</strong>Male</li>
-                                <li><strong>DOB:</strong>September 16th</li>
+                                <li><strong>Name:</strong>${person.user.name}</li>
+                                <li><strong>Email:</strong>${person.user.email}</li>
+                                <li><strong>City:</strong>${person.location}</li>
+                                <li><strong>State:</strong>${person.location}</li>
+                                <li><strong>Gender:</strong>${person.location}</li>
+                                <li><strong>DOB:</strong>${person.location}</li>
                             </ul>
                         </div>
                     </div><br><br>

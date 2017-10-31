@@ -6,6 +6,10 @@ import java.util.List;
 
 @Entity
 public class Person{
+
+
+    Person(){};
+
     @Id
     @GeneratedValue
     private long Id;
@@ -21,9 +25,6 @@ public class Person{
     @OneToOne
     private User user;
 
-    private String email;
-
-    private String password;
     @OneToOne
     private User refID;
     @OneToOne
@@ -34,22 +35,6 @@ public class Person{
     List<Notification> notifications;
     @OneToMany
     List<Club> clubs;
-
-    public Person(Date birth, Job job, School school, Hobby hobby, Location location, User user, String email, String password, User refID, Picture profilePicID, List<Relation> relations, List<Notification> notifications, List<Club> clubs) {
-        this.birth = birth;
-        this.job = job;
-        this.school = school;
-        this.hobby = hobby;
-        this.location = location;
-        this.user = user;
-        this.email = email;
-        this.password = password;
-        this.refID = refID;
-        this.profilePicID = profilePicID;
-        this.relations = relations;
-        this.notifications = notifications;
-        this.clubs = clubs;
-    }
 
     public long getId() {
         return Id;
@@ -105,22 +90,6 @@ public class Person{
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public User getRefID() {
