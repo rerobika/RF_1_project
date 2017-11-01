@@ -18,13 +18,9 @@ public class Post {
     private Post parent;
     private Date date;
 
-    public Post(String text, User from, User to, Post parent, List<Post> children, Date date) {
-        this.text = text;
-        this.from = from;
-        this.to = to;
-        this.parent = parent;
-        this.date = date;
-    }
+
+    private long likeNumber;
+
     public Post(){};
 
     public long getId() {
@@ -74,4 +70,13 @@ public class Post {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public long getLikeNumber() {
+        return likeNumber;
+    }
+
+    public void setLikeNumber(long likeNumber) {
+        this.likeNumber = likeNumber;
+    }
+
 }

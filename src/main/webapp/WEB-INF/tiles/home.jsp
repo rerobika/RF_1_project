@@ -15,7 +15,8 @@
                     </div>
                     <div class="panel-body">
                         <form:form method="post" modelAttribute="postInfo" class="post-form">
-                            <form:hidden path="from"  class="post-control"/>
+                            <form:hidden path="from"  value="${person.user.id}" class="post-control"/>
+                            <form:hidden path="likeNumber"  value="0" class="post-control"/>
                             <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
                             <div class="form-group">
                                 <form:input type="text" path="text" placeholder="Write on the wall" class="form-control" />
@@ -52,7 +53,7 @@
                                 <div class="row">
                                     <div class="col-sm-2">
                                         <a href="profile.html" class="post-avatar thumbnail"><img src="img/user.png" alt="Profile picture"><div class="text-center">Full name</div></a> <!-- TODO: FIX img src-->
-                                        <div class="likes text-center">123 likes</div> <!-- TODO: FIX like number-->
+                                        <div class="likes text-center">${posted.likeNumber}</div> <!-- TODO: FIX like number-->
                                     </div>
                                     <div class="col-sm-10">
                                         <div class="bubble">

@@ -1,12 +1,16 @@
 package io.github.rerobika.rf1.controller;
 
 import com.sun.java.swing.plaf.motif.resources.motif_de;
+import io.github.rerobika.rf1.domain.Person;
 import io.github.rerobika.rf1.domain.Post;
+import io.github.rerobika.rf1.domain.User;
+import io.github.rerobika.rf1.service.PersonService;
 import io.github.rerobika.rf1.service.PostService;
 import io.github.rerobika.rf1.service.UserService;
 import org.apache.tomcat.jni.Time;
 import org.atteo.evo.inflector.English;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +35,8 @@ public class LandingController {
     private UserService userService;
     @Autowired
     private PostService postService;
+    @Autowired
+    private PersonService personService;
 
     @GetMapping("/")
     ModelAndView index(ModelAndView modelAndView) {
@@ -41,7 +47,11 @@ public class LandingController {
     @GetMapping("/home")
     ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.getUserByEmail(username);
+        Person person = personService.getPerson(user);
         Post post = new Post();
+        modelAndView.addObject("person", person);
         modelAndView.addObject("postInfo", post);
         modelAndView.addObject("posts",postService.getAll());
         modelAndView.setViewName("app.home");
@@ -55,7 +65,7 @@ public class LandingController {
             postInfo.setDate(new Date());
             postService.addPost(postInfo);
         }
-        modelAndView.setViewName("app.home");
+        modelAndView.setViewName("redirect:/home");
         return modelAndView;
     }
 

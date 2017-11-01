@@ -9,19 +9,19 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="profile">
-                    <h1 class="page-header">${person.user.name}</h1>
+                    <h1 class="page-header">${profilePerson.user.name}</h1>
                     <div class="row">
                         <div class="col-md-4">
                             <img src="img/user.png" class="img-thumbnail" alt="Profile picture">  <!-- TODO: FIX img src-->
                         </div>
                         <div class="col-md-8">
                             <ul>
-                                <li><strong>Name:</strong>${person.user.name}</li>
-                                <li><strong>Email:</strong>${person.user.email}</li>
-                                <li><strong>City:</strong>${person.location}</li>
-                                <li><strong>State:</strong>${person.location}</li>
-                                <li><strong>Gender:</strong>${person.location}</li>
-                                <li><strong>DOB:</strong>${person.location}</li>
+                                <li><strong>Name:</strong>${profilePerson.user.name}</li>
+                                <li><strong>Email:</strong>${profilePerson.user.email}</li>
+                                <li><strong>City:</strong>${profilePerson.location}</li>
+                                <li><strong>State:</strong>${profilePerson.location}</li>
+                                <li><strong>Gender:</strong>${profilePerson.location}</li>
+                                <li><strong>DOB:</strong>${profilePerson.location}</li>
                             </ul>
                         </div>
                     </div><br><br>
@@ -32,13 +32,17 @@
                                     <h3 class="panel-title">Profile Wall</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <form>
+                                    <form:form method="post" modelAttribute="postInfo" class="post-form">
                                         <div class="form-group">
-                                            <textarea class="form-control" placeholder="Write on the wall"></textarea>
+                                            <form:input type="text" path="text" placeholder="Write on the wall" class="form-control" />
+                                            <form:hidden path="from"  value = "${currentPerson.user.id}" class="post-control"/>
+                                            <form:hidden path="to"  value = "${profilePerson.user.id}" class="post-control"/>
+                                            <form:hidden path="likeNumber"  value = "0" class="post-control"/>
+
                                         </div>
                                         <div class="pull-right">
                                             <div class="btn-toolbar">
-                                                <button type="submit" class="btn btn-default">Submit</button>
+                                                <button type="submit" class="btn btn-default"  name="sendmypost">Submit</button>
                                                 <div class="row">
                                                     <div class="col-xs-12 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" id="image-upload-container">
                                                         <div class="input-group image-preview">
@@ -58,7 +62,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </form:form>
                                 </div>
                             </div>
                             <!-- Fill with onw posts-->
