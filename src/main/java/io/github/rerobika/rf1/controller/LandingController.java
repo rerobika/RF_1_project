@@ -54,6 +54,7 @@ public class LandingController {
         modelAndView.addObject("person", person);
         modelAndView.addObject("postInfo", post);
         modelAndView.addObject("posts",postService.getAll());
+        modelAndView.addObject("comments",postService.getComments(postService.getAll()));
         modelAndView.setViewName("app.home");
         return modelAndView;
     }
@@ -62,8 +63,11 @@ public class LandingController {
     {
         if(!result.hasErrors())
         {
-            postInfo.setDate(new Date());
-            postService.addPost(postInfo);
+            if(!postInfo.getText().isEmpty())
+            {
+                postInfo.setDate(new Date());
+                postService.addPost(postInfo);
+            }
         }
         modelAndView.setViewName("redirect:/home");
         return modelAndView;

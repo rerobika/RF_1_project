@@ -52,7 +52,7 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-sm-2">
-                                        <a href="profile.html" class="post-avatar thumbnail"><img src="img/user.png" alt="Profile picture"><div class="text-center">Full name</div></a> <!-- TODO: FIX img src-->
+                                        <a href="profile.html" class="post-avatar thumbnail"><img src="img/user.png" alt="Profile picture"><div class="text-center">${posted.from.name}</div></a> <!-- TODO: FIX img src-->
                                         <div class="likes text-center">${posted.likeNumber}</div> <!-- TODO: FIX like number-->
                                     </div>
                                     <div class="col-sm-10">
@@ -64,29 +64,33 @@
                                         </div>
                                         <p class="post-actions"><a href="#">Like</a>
                                         <div class="comment-form">
-                                            <form class="form-inline">
+                                             <form:form method="post" modelAttribute="postInfo" class="form-inline">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" placeholder="enter comment">
+                                                    <form:hidden path="from"  value="${person.user.id}" class="post-control"/>
+                                                    <form:hidden path="to"  value="${posted.from.id}" class="post-control"/>
+                                                    <form:hidden path="parent" value="${posted.id}" class="post-control"/>
+                                                    <form:hidden path="likeNumber" value="0" class="post-control"/>
+                                                    <form:input type="text" path="text" class="form-control" placeholder="enter comment"/>
                                                 </div>
                                                 <button type="submit" class="btn btn-default">Add</button>
-                                            </form>
+                                            </form:form>
                                         </div>
                                         <div class="clearfix"></div>
-                                        <div class="comments">
-                                            <div class="comment">
-                                                <a href="#" class="comment-avatar pull-left"><img src="img/user.png" alt="Commenter profile pic"></a> <!-- TODO: FIX img src-->
-                                                <div class="comment-text">
-                                                    <p>First comment goes here.</p>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                            <div class="comment">
-                                                <a href="#" class="comment-avatar pull-left"><img src="img/user.png" alt="Commenter profile pic"></a> <!-- TODO: FIX img src-->
-                                                <div class="comment-text">
-                                                    <p>Second comment goes here</p>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
+                                            <div class="comments">
+                                            <c:if test="${not empty comments}">
+                                                <c:forEach items="${comments}" var="comment">
+                                                    <c:if test="${comment.parent.id == posted.id}">
+                                                    <div class="clearfix"></div>
+                                                    <div class="comment">
+                                                        <a href="#" class="comment-avatar pull-left"><img src="img/user.png" alt="Commenter profile pic"></a> <!-- TODO: FIX img src-->
+                                                        <div class="comment-text">
+                                                            <p>${comment.text}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>

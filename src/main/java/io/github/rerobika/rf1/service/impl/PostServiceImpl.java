@@ -68,4 +68,15 @@ public class PostServiceImpl implements PostService {
     public List<Post> getComments(Post post) {
         return (List<Post>) postRep.findByParent(post);
     }
+
+    @Override
+    public List<Post> getComments(List<Post> posts) {
+        List<Post> commentsForPosts = new ArrayList<Post>();
+        for(Post post : posts)
+        {
+            commentsForPosts.addAll(getComments(post));
+        }
+        return  commentsForPosts;
+    }
+
 }

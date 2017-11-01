@@ -38,7 +38,6 @@
                                             <form:hidden path="from"  value = "${currentPerson.user.id}" class="post-control"/>
                                             <form:hidden path="to"  value = "${profilePerson.user.id}" class="post-control"/>
                                             <form:hidden path="likeNumber"  value = "0" class="post-control"/>
-
                                         </div>
                                         <div class="pull-right">
                                             <div class="btn-toolbar">
