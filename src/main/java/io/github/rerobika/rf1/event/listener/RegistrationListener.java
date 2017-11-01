@@ -49,6 +49,7 @@ public class RegistrationListener implements
         logger.log(Level.INFO, "http://localhost:8080" + confirmationUrl);
         String message = "Registration successful! Please confirm your e-mail with the link below. \n";
         SimpleMailMessage email = new SimpleMailMessage();
+        email.setFrom("noreply@rf1project.com");
         email.setTo(recipientAddress);
         email.setSubject(subject);
         email.setText(message + " rn" + "http://localhost:8080" + confirmationUrl);

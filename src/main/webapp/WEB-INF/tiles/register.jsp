@@ -22,21 +22,31 @@
 
 
             <div class="panel-body">
-                <form:form method="post" modelAttribute="user" class="login-form">
+                <form:form method="post" modelAttribute="person" class="login-form">
 
                     <div class="input-group">
-                        <form:input type="text" path="email" placeholder="Email"
+                        <form:input type="text" path="user.name" placeholder="Full name"
                                     class="form-control" />
                     </div>
 
                     <div class="input-group">
-                        <form:input type="password" path="plainPassword" placeholder="Password"
+                        <form:input type="text" path="user.email" placeholder="Email"
                                     class="form-control" />
                     </div>
 
                     <div class="input-group">
-                        <form:input type="password" path="repeatPassword"
+                        <form:input type="password" path="user.plainPassword" placeholder="Password"
+                                    class="form-control" />
+                    </div>
+
+                    <div class="input-group">
+                        <form:input type="password" path="user.repeatPassword"
                                     placeholder="Repeat password" class="form-control" />
+                    </div>
+
+                    <div class="input-group">
+                        <form:input type="text" path="refID" placeholder="Reference code"
+                                    class="form-control" />
                     </div>
 
                     <div class="input-group">

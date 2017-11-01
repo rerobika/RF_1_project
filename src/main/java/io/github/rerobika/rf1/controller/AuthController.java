@@ -1,8 +1,10 @@
 package io.github.rerobika.rf1.controller;
 
+import io.github.rerobika.rf1.domain.Person;
 import io.github.rerobika.rf1.domain.User;
 import io.github.rerobika.rf1.event.OnRegistrationCompleteEvent;
 import io.github.rerobika.rf1.exception.EmailExistsException;
+import io.github.rerobika.rf1.service.PersonService;
 import io.github.rerobika.rf1.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +32,13 @@ public class AuthController {
 
     private final ApplicationEventPublisher eventPublisher;
 
+    private final PersonService personService;
+
     @Autowired
-    public AuthController(UserService userService, ApplicationEventPublisher eventPublisher) {
+    public AuthController(UserService userService, ApplicationEventPublisher eventPublisher, PersonService personService) {
         this.userService = userService;
         this.eventPublisher = eventPublisher;
+        this.personService = personService;
     }
 
     @GetMapping("/login")
@@ -48,8 +53,8 @@ public class AuthController {
 
     @GetMapping("/register")
     ModelAndView register(ModelAndView modelAndView) {
-        User user = new User();
-        modelAndView.getModel().put("user", user);
+        Person person = new Person();
+        modelAndView.getModel().put("person", person);
         modelAndView.setViewName("app.register");
         return modelAndView;
     }
@@ -72,15 +77,16 @@ public class AuthController {
 
     @PostMapping(value="/register")
     ModelAndView register(ModelAndView modelAndView,
-                          @ModelAttribute(value="user") @Valid User user,
+                          @ModelAttribute(value="person") @Valid Person person,
                           BindingResult result,
                           WebRequest request) {
-
         String view = "app.register";
 
+        User user = person.getUser();
         if(!result.hasErrors()) {
             try {
                 user = userService.register(user);
+                personService.addPerson(person);
             } catch (EmailExistsException e) {
                 logger.error(e.getMessage(), e);
                 return new ModelAndView("app.error", "error", new Error(e.getMessage()));

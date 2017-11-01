@@ -30,8 +30,8 @@ public class ProfileDataController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("app.profile");
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userService.getUser(username); //fixme: ad
-        Person person = personService.getPerson(user.getId());
+        User user = userService.getUserByEmail(username);
+        Person person = personService.getPerson(user);
         modelAndView.addObject("person",person);
         return modelAndView;
     }

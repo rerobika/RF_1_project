@@ -12,6 +12,8 @@ import java.util.List;
  * Extension of the default Spring security UserDetails service
  *
  */
+
+
 public interface UserService extends UserDetailsService {
 
     /**
@@ -57,4 +59,6 @@ public interface UserService extends UserDetailsService {
     String validateVerificationToken(String token);
 
     User getUser(String verificationToken);
+
+    User getUserByEmail(final String email);
     }

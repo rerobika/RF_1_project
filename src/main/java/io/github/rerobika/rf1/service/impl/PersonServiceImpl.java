@@ -1,12 +1,14 @@
 package io.github.rerobika.rf1.service.impl;
 
 import io.github.rerobika.rf1.domain.Person;
+import io.github.rerobika.rf1.domain.User;
 import io.github.rerobika.rf1.repository.PersonRepository;
 import io.github.rerobika.rf1.service.PersonService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+
 @Service
 public class PersonServiceImpl implements PersonService {
 
@@ -32,8 +34,8 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person getPerson(long id)
+    public Person getPerson(User user)
     {
-        return personRepository.findOne(id);
+        return personRepository.findByUser(user);
     }
 }

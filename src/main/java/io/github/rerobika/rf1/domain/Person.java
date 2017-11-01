@@ -6,9 +6,7 @@ import java.util.List;
 
 @Entity
 public class Person{
-
-
-    Person(){};
+    public Person(){};
 
     @Id
     @GeneratedValue
@@ -36,6 +34,19 @@ public class Person{
     @OneToMany
     List<Club> clubs;
 
+    public Person(Date birth, Job job, School school, Hobby hobby, Location location, User user, User refID, Picture profilePicID, List<Relation> relations, List<Notification> notifications, List<Club> clubs) {
+        this.birth = birth;
+        this.job = job;
+        this.school = school;
+        this.hobby = hobby;
+        this.location = location;
+        this.user = user;
+        this.refID = refID;
+        this.profilePicID = profilePicID;
+        this.relations = relations;
+        this.notifications = notifications;
+        this.clubs = clubs;
+    }
     public long getId() {
         return Id;
     }
