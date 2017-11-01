@@ -22,7 +22,7 @@ public class PostServiceImpl implements PostService {
     public List<Post> getAll()
     {
         if(postRep.count()!=0)
-        return (List<Post>) postRep.findAll();
+            return (List<Post>) postRep.findAllByParentIsNull();
         else return  new ArrayList<Post>();
     }
 
@@ -47,7 +47,6 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> getPostWithStructure(long id)
     {
-        Post asd;
         Post post = postRep.findOne(id);
         Post parent = post.getParent();
         return (List<Post>) postRep.findByParent(parent);
@@ -62,13 +61,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> getPostByUser(User user)
     {
-        return (List<Post>) postRep.findByFrom(user);
+        return (List<Post>) postRep.findByFromAndParentIsNull(user);
     }
 
     @Override
-    public List<Post> getTimelinePosts(User user)
-    {
-        //TODO: User Service implementation.
-        return null;
+    public List<Post> getComments(Post post) {
+        return (List<Post>) postRep.findByParent(post);
     }
 }

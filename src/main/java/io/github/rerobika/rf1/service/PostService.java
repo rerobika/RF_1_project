@@ -20,5 +20,5 @@ public interface PostService {
     public List<Post> getPostWithStructure(long id);
     public Post getParent(Post post);
     public List<Post> getPostByUser(User user);
-    public List<Post> getTimelinePosts(User user);
+    public List<Post> getComments(Post post);
 }
