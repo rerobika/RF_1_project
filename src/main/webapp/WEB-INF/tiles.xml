@@ -11,11 +11,19 @@
 
 
     <definition name="app.home" extends="app.default">
-        <put-attribute name="content" value="/WEB-INF/tiles/home.jsp" />
+        <put-attribute name="content" value="app.home.posting" />
+    </definition>
+
+    <definition name="app.home.posting" template="/WEB-INF/layouts/home.jsp">
+        <put-attribute name="posting" value="/WEB-INF/tiles/posting.jsp"/>
     </definition>
 
     <definition name="app.profile" extends="app.default">
-        <put-attribute name="content" value="/WEB-INF/tiles/profile.jsp" />
+        <put-attribute name="content" value="app.profile.posting" />
+    </definition>
+
+    <definition name="app.profile.posting" template="/WEB-INF/layouts/profile.jsp">
+        <put-attribute name="posting" value="/WEB-INF/tiles/posting.jsp"/>
     </definition>
 
     <definition name="app.members" extends="app.default">

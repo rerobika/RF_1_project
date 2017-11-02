@@ -19,6 +19,7 @@ public class Post {
     private Date date;
 
 
+
     private long likeNumber;
 
     public Post(){};
@@ -78,5 +79,4 @@ public class Post {
     public void setLikeNumber(long likeNumber) {
         this.likeNumber = likeNumber;
     }
-
 }

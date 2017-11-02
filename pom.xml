@@ -10,6 +10,11 @@
 	<name>rf1</name>
 	<description>RF1 group project</description>
 
+	<groupId>com.mkyong</groupId>
+	<artifactId>spring-boot-file-upload</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0</version>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -100,6 +105,14 @@
           <artifactId>mysql-connector-java</artifactId>
           <scope>runtime</scope>
         </dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+
 
     </dependencies>
 

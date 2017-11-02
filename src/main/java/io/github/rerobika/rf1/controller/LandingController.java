@@ -49,10 +49,10 @@ public class LandingController implements ErrorController {
     ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userService.getUserByEmail(username);
-        Person person = personService.getPerson(user);
+        User currentUser = userService.getUserByEmail(username);
+        Person currentPerson = personService.getPerson(currentUser);
         Post post = new Post();
-        modelAndView.addObject("person", person);
+        modelAndView.addObject("currentPerson", currentPerson);
         modelAndView.addObject("postInfo", post);
         modelAndView.addObject("posts",postService.getAll());
         modelAndView.addObject("comments",postService.getComments(postService.getAll()));

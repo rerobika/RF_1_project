@@ -32,6 +32,14 @@
 
     <link href="${contextRoot}/css/style.css" rel="stylesheet">
 
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="${contextRoot}/js/ekko-lightbox.js"></script>
+    <script src="${contextRoot}/js/image-upload.js"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="${contextRoot}/css/ekko-lightbox.css" rel="stylesheet">
+    <link href="${contextRoot}/css/font-awesome.css" rel="stylesheet">
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -56,8 +64,15 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="${contextRoot}/home">Home</a></li>
-                <li><a href="${contextRoot}/about">About</a></li>
+
+                <sec:authorize access="!isAuthenticated()">
+                    <li><a href="${contextRoot}/about">About</a></li>
+                </sec:authorize>
+
+                <sec:authorize access="isAuthenticated()">
+                    <li class="active"><a href="${contextRoot}/home">Home</a></li>
+                    <li><a href="${contextRoot}/profile">Profile</a></li>
+                </sec:authorize>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -69,7 +84,6 @@
 
                 <sec:authorize access="isAuthenticated()">
                     <li><a href="javascript:$('#logoutForm').submit();">Logout</a></li>
-                    <li><a href="${contextRoot}/profile">Profile</a></li>
                 </sec:authorize>
 
             </ul>

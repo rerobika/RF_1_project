@@ -28,7 +28,7 @@
                            value="${_csrf.token}" />
 
                     <div class="input-group">
-                        <input type="text" name="username" placeholder="Username"
+                        <input type="text" name="username" placeholder="Email"
                                class="form-control" />
                     </div>
 
