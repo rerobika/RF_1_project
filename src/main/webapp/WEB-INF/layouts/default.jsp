@@ -72,17 +72,6 @@
                     <li><a href="${contextRoot}/profile">Profile</a></li>
                 </sec:authorize>
 
-                <sec:authorize access="hasRole('ROLE_ADMIN')">
-                    <li class="dropdown"><a href="#" class="dropdown-toggle"
-                                            data-toggle="dropdown" role="button" aria-haspopup="true"
-                                            aria-expanded="false">Status <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="${contextRoot}/addstatus">Add Status</a></li>
-                            <li><a href="${contextRoot}/viewstatus">View Status
-                                Updates</a></li>
-                        </ul></li>
-                </sec:authorize>
-
             </ul>
         </div>
         <!--/.nav-collapse -->

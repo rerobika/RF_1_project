@@ -1,42 +1,43 @@
 package io.github.rerobika.rf1.controller;
 
-import com.sun.java.swing.plaf.motif.resources.motif_de;
 import io.github.rerobika.rf1.domain.Person;
 import io.github.rerobika.rf1.domain.Post;
 import io.github.rerobika.rf1.domain.User;
 import io.github.rerobika.rf1.service.PersonService;
 import io.github.rerobika.rf1.service.PostService;
 import io.github.rerobika.rf1.service.UserService;
-import org.apache.tomcat.jni.Time;
-import org.atteo.evo.inflector.English;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import sun.util.resources.LocaleData;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
  * Created by Nandor Magyar on 9/30/17.
  */
 @Controller
-public class LandingController {
+public class LandingController implements ErrorController {
+
+    private final UserService userService;
+    private final PostService postService;
+    private final PersonService personService;
+
+    private static final String ERROR_PATH = "/error";
 
     @Autowired
-    private UserService userService;
-    @Autowired
-    private PostService postService;
-    @Autowired
-    private PersonService personService;
+    public LandingController(UserService userService, PostService postService, PersonService personService) {
+        this.userService = userService;
+        this.postService = postService;
+        this.personService = personService;
+    }
 
     @GetMapping("/")
     ModelAndView index(ModelAndView modelAndView) {
@@ -58,6 +59,7 @@ public class LandingController {
         modelAndView.setViewName("app.home");
         return modelAndView;
     }
+
     @PostMapping("/home")
     ModelAndView home(ModelAndView modelAndView, @ModelAttribute(value="postInfo") @Valid Post postInfo, BindingResult result)
     {
@@ -76,6 +78,9 @@ public class LandingController {
     @RequestMapping("/about")
     String about() { return "app.about";    }
 
+    @RequestMapping("/error")
+    String error() { return "app.error"; }
+
     @RequestMapping("/profile")
     String profile() {
         return "app.profile";
@@ -84,5 +89,10 @@ public class LandingController {
     @RequestMapping("/members")
     String members() {
         return "app.members";
+    }
+
+    @Override
+    public String getErrorPath() {
+        return ERROR_PATH;
     }
 }

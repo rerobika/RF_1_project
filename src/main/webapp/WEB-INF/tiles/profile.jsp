@@ -16,12 +16,12 @@
                         </div>
                         <div class="col-md-8">
                             <ul>
-                                <li><strong>Name:</strong>${profilePerson.user.name}</li>
-                                <li><strong>Email:</strong>${profilePerson.user.email}</li>
-                                <li><strong>City:</strong>${profilePerson.location}</li>
-                                <li><strong>State:</strong>${profilePerson.location}</li>
-                                <li><strong>Gender:</strong>${profilePerson.location}</li>
-                                <li><strong>DOB:</strong>${profilePerson.location}</li>
+                                <li><strong>Name:</strong> ${profilePerson.user.name}</li>
+                                <li><strong>Email:</strong> ${profilePerson.user.email}</li>
+                                <li><strong>City:</strong> ${profilePerson.location}</li>
+                                <li><strong>State:</strong> ${profilePerson.location}</li>
+                                <li><strong>Gender:</strong> ${profilePerson.location}</li>
+                                <li><strong>DOB:</strong> ${profilePerson.location}</li>
                             </ul>
                         </div>
                     </div><br><br>

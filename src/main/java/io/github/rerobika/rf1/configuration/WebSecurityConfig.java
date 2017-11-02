@@ -39,35 +39,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/css/*",
                         "/img/*")
                 .permitAll()
-                .antMatchers("/addstatus",
-                        "/editstatus",
-                        "/deletestatus",
-                        "/viewstatus")
+                .antMatchers("/home",
+                        "/post",
+                        "/profile",
+                        "/profile/*")
                 .hasRole("USER")
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/home")
-                .permitAll()
                 .and()
                 .logout()
                 .permitAll();
 
         // @formatter:on
-    }
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
-        // @formatter:off
-        auth
-                .inMemoryAuthentication()
-                .withUser("john")
-                .password("hello")
-                .roles("USER");
-
-        // @formatter:on
-
     }
 
     @Override
