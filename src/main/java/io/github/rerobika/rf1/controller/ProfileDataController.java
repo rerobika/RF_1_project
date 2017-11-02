@@ -39,8 +39,8 @@ public class ProfileDataController {
     @Autowired
     PostService postService;
 
-    @GetMapping("/profile/{id}")
-    ModelAndView profile(@PathVariable long id) {
+    @GetMapping("/profile/{profile_id}")
+    ModelAndView profile(@PathVariable long profile_id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("app.profile");
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -49,7 +49,7 @@ public class ProfileDataController {
         Person profilePerson;
 
         Person currentPerson = personService.getPerson(currentUser);
-        profileUser = userService.getUser(id);
+        profileUser = userService.getUser(profile_id);
         if (profileUser != null)
         {
             profilePerson = personService.getPerson(profileUser);
@@ -68,8 +68,8 @@ public class ProfileDataController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/profile/{id}",params = "sendmypost")
-    ModelAndView sendMyPost(@PathVariable long id, ModelAndView modelAndView, @ModelAttribute(value="postInfo") @Valid Post postInfo,
+    @PostMapping(value = "/profile/{profile_id}",params = "sendmypost")
+    ModelAndView sendMyPost(@PathVariable long profile_id, ModelAndView modelAndView, @ModelAttribute(value="postInfo") @Valid Post postInfo,
                             @RequestParam(value = "file", required = false) MultipartFile file, BindingResult result)
     {
         if(!result.hasErrors())
@@ -112,7 +112,7 @@ public class ProfileDataController {
             }
 
         }
-        modelAndView.setViewName("redirect:/profile/"+id);
+        modelAndView.setViewName("redirect:/profile/"+profile_id);
         return modelAndView;
     }
 
