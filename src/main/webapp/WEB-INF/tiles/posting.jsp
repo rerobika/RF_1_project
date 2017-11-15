@@ -57,7 +57,7 @@
                                                     <img src="${fn:substring(mySplit, 1, fn:length(mySplit))}" class="img-thumbnail" alt="post_pic">
                                                 </c:when>
                                                 <c:when test="${fn:startsWith(mySplit, 'http')}">
-                                                    <img src="${fn:substring(mySplit, 1, fn:length(mySplit))}" class="img-thumbnail" alt="post_pic">
+                                                    <img src="${mySplit}" class="img-thumbnail" alt="post_pic">
                                                 </c:when>
                                                 <c:otherwise>
                                                     <c:out value="${mySplit} "/>
