@@ -1,5 +1,4 @@
 $(document).ready( function() {
-
     $(document).on('change', '.btn-file :file', function() {
         var input = $(this),
             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
@@ -13,12 +12,9 @@ $(document).ready( function() {
 
         if( input.length ) {
             input.val(log);
-        } else {
-            if( log ) alert(log);
         }
 
     });
-
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -33,10 +29,5 @@ $(document).ready( function() {
 
     $("#imgInp").change(function(){
         readURL(this);
-    });
-
-    $("#clear").click(function(){
-        $('#img-upload').attr('src','');
-        $('#urlname').val('');
     });
 });

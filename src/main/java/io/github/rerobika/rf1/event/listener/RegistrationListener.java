@@ -46,13 +46,13 @@ public class RegistrationListener implements
         String subject = "Registration Confirmation";
         String confirmationUrl
                 = event.getAppUrl() + "/verification/" + token;
-        logger.log(Level.INFO, "http://localhost:8080" + confirmationUrl);
+        logger.log(Level.INFO, "http://localhost:8090" + confirmationUrl);
         String message = "Registration successful! Please confirm your e-mail with the link below. \n";
         SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("noreply@rf1project.com");
         email.setTo(recipientAddress);
         email.setSubject(subject);
-        email.setText(message + " rn" + "http://localhost:8080" + confirmationUrl);
+        email.setText(message + "http://localhost:8090" + confirmationUrl);
         mailSender.send(email);
     }
 }

@@ -13,7 +13,7 @@
                     <h1 class="page-header">${profilePerson.user.name}</h1>
                     <div class="row">
                         <div class="col-md-4">
-                            <img src="img/user.png" class="img-thumbnail" alt="Profile picture">  <!-- TODO: FIX img src-->
+                            <img src="${profilePerson.profilePicID.location}" class="img-thumbnail" alt="Profile picture">
                         </div>
                         <div class="col-md-8">
                             <ul>

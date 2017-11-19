@@ -10,6 +10,7 @@ import io.github.rerobika.rf1.service.PersonService;
 import io.github.rerobika.rf1.service.PostService;
 import io.github.rerobika.rf1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -82,15 +83,16 @@ public class ProfileDataController {
             else
             {
                 //Save the uploaded file to this folder
-                String UPLOADED_FOLDER = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "img";
-                String fileName = new String(new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss-SSS").format(new Date()) + file.getOriginalFilename());
+                String UPLOADED_FOLDER = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "webapp" +  File.separator  + "img" +  File.separator  + "post_picture";
+                String fileName = new String(new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss-SSS").format(new Date()) + "_"+  file.getOriginalFilename());
 
-                postInfo.setText("&" + UPLOADED_FOLDER + File.separator + fileName + " "+ postInfo.getText());   //TODO: insert this picture to default album
+                postInfo.setText("&/img/post_picture/" + fileName + " "+ postInfo.getText());   //TODO: insert this picture to default album
 
                 InputStream inputStream = null;
                 OutputStream outputStream = null;
 
                 File newFile = new File(UPLOADED_FOLDER + File.separator + fileName);
+
                 try {
                     inputStream = file.getInputStream();
 

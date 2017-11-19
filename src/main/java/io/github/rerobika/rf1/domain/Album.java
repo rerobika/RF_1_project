@@ -11,13 +11,31 @@ public class Album {
     private long id;
     private String name;
     private Date date;
+    @OneToOne
+    private User owner;
     @OneToMany
     private List<Picture> albumList;
 
-    public Album(String name, Date date, List<Picture> album) {
+    public Album (){};
+    public Album(String name, Date date, List<Picture> album, User owner) {
         this.name = name;
         this.date = date;
         this.albumList = album;
+        this.owner = owner;
+    }
+
+    public Album(String name, Date date, User owner) {
+        this.name = name;
+        this.date = date;
+        this.owner = owner;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     public long getId() {

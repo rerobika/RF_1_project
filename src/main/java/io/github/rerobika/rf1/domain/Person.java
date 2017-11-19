@@ -6,9 +6,7 @@ import java.util.List;
 
 @Entity
 public class Person{
-    public Person(){};
-
-    @Id
+     @Id
     @GeneratedValue
     private long Id;
     private Date birth;
@@ -33,6 +31,8 @@ public class Person{
     List<Notification> notifications;
     @OneToMany
     List<Club> clubs;
+
+    public Person(){ };
 
     public Person(Date birth, Job job, School school, Hobby hobby, Location location, User user, User refID, Picture profilePicID, List<Relation> relations, List<Notification> notifications, List<Club> clubs) {
         this.birth = birth;

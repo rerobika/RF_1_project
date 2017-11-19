@@ -1,5 +1,7 @@
 package io.github.rerobika.rf1.domain;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -23,9 +26,7 @@ public class User implements UserDetails {
     private String name;
     
     private String password;
-    
-    @OneToMany
-    private List<Album> albums;
+
     @OneToMany
     private List<Message> messages;
     @OneToMany
@@ -44,11 +45,10 @@ public class User implements UserDetails {
     private String role;
 
 
-    public User() {}
+    public User() { }
 
-    public User(String name, List<Album> albums, List<Message> messages, List<Post> posts) {
+    public User(String name, List<Message> messages, List<Post> posts) {
         this.name = name;
-        this.albums = albums;
         this.messages = messages;
         this.posts = posts;
     }
@@ -67,14 +67,6 @@ public class User implements UserDetails {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Album> getAlbums() {
-        return albums;
-    }
-
-    public void setAlbums(List<Album> albums) {
-        this.albums = albums;
     }
 
     public List<Message> getMessages() {

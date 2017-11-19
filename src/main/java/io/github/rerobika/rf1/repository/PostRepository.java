@@ -11,5 +11,6 @@ import java.util.Collection;
 public interface PostRepository extends CrudRepository<Post, Long> {
     Collection<Post> findByParent(Post parent);
     Collection<Post> findByFromAndParentIsNull(User user);
+    Collection<Post> findByToAndParentIsNull(User user);
     Collection<Post> findAllByParentIsNull();
 }

@@ -47,6 +47,7 @@
                     <div class="input-group">
                         <form:input type="text" path="refID" placeholder="Reference code"
                                     class="form-control" />
+
                     </div>
 
                     <div class="input-group">

@@ -1,6 +1,7 @@
 package io.github.rerobika.rf1.service.impl;
 
 import io.github.rerobika.rf1.domain.Album;
+import io.github.rerobika.rf1.domain.User;
 import io.github.rerobika.rf1.service.AlbumService;
 import io.github.rerobika.rf1.repository.AlbumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,10 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public Album getAlbum(long id) {
         return albumRep.findOne(id);
+    }
+
+    @Override
+    public User getOwner(Album album) {
+        return album.getOwner();
     }
 }

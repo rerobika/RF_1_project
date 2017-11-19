@@ -14,27 +14,19 @@
                     <form:hidden path="to"  value = "${profilePerson.user.id}" class="post-control"/>
                     <form:hidden path="likeNumber"  value = "0" class="post-control"/>
                 </div>
-                <div class="pull-right">
-                    <div class="btn-toolbar">
-                        <button type="submit" class="btn btn-default"  name="sendmypost" >Submit</button>
-                        <div class="row">
-                            <div class="col-xs-12 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" id="image-upload-container">
-                                <div class="input-group image-preview">
-                                    <input type="text" class="form-control image-preview-filename" disabled="disabled">
-                                    <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
-                                                <span class="glyphicon glyphicon-remove"></span> Clear
-                                            </button>
-                                        <div class="btn btn-default image-preview-input">
-                                            <span class="glyphicon glyphicon-folder-open"></span>
-                                            <span class="image-preview-input-title">Browse</span>
-                                            <input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/>
-                                        </div>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row">
+
+                        <button type="submit" class="btn btn-default col-lg-2"  name="sendmypost" >Submit</button>
+
+                            <span class="col-lg-2" style="float:right;">
+                                <span class="btn btn-default btn-file">
+                                    Browse… <input type="file" accept="image/png, image/jpeg, image/gif" id="imgInp" name="file" />
+                                </span>
+                            </span>
+                            <input type="text" class="form-control col-lg-8" readonly style="float:right; width: 65%!important; display:inline;">
+
+                        <img id='img-upload'/>
+
                 </div>
             </form:form>
         </div>
@@ -45,12 +37,19 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-2">
-                                <a href="profile.html" class="post-avatar thumbnail"><img src="img/user.png" alt="Profile picture"><div class="text-center">${posted.from.name}</div></a> <!-- TODO: FIX img src-->
+                                <a href="profile/${posted.id}}" class="post-avatar thumbnail"><img src="${profilePerson.profilePicID.location}" alt="Profile picture"><div class="text-center">${posted.from.name}</div></a> <!-- TODO: FIX img src-->
                                 <div class="likes text-center">${posted.likeNumber}</div> <!-- TODO: FIX like number-->
                             </div>
                             <div class="col-sm-10">
                                 <div class="bubble">
                                     <div class="pointer">
+                                        <c:if test="${currentPerson.user.id == profilePerson.user.id}">
+                                            <p><a href="${currentPerson.user.id}"> ${currentPerson.user.name}</a></p>
+                                        </c:if>
+                                        <c:if test="${currentPerson.user.id != profilePerson.user.id}">
+                                            <p><a href="${currentPerson.user.id}"> ${currentPerson.user.name}</a> -> <a href="${profilePerson.user.id}"> ${profilePerson.user.name}</a></p>
+                                        </c:if>
+                                        <hr>
                                         <c:forTokens items="${posted.text}" delims=" " var="mySplit">
                                             <c:choose>
                                                 <c:when test="${fn:startsWith(mySplit, '&')}">
@@ -87,7 +86,7 @@
                                             <c:if test="${comment.parent.id == posted.id}">
                                                 <div class="clearfix"></div>
                                                 <div class="comment">
-                                                    <a href="#" class="comment-avatar pull-left"><img src="img/user.png" alt="Commenter profile pic"></a> <!-- TODO: FIX img src-->
+                                                    <a href="#" class="comment-avatar pull-left"><img src="${profilePerson.profilePicID.location}" alt="Commenter profile pic"></a> <!-- TODO: FIX img src-->
                                                     <div class="comment-text">
                                                         <p>${comment.text}</p>
                                                     </div>

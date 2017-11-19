@@ -10,15 +10,15 @@ public class Picture {
     @Id
     private long id;
     private String location;
-    private long size;
     @ManyToOne
     private Album album;
 
-    public Picture(String location, long size, Album album) {
+    public Picture(String location, Album album) {
         this.location = location;
-        this.size = size;
         this.album = album;
     }
+
+    public Picture (){};
 
     public long getId() {
         return id;
@@ -34,14 +34,6 @@ public class Picture {
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public long getSize() {
-        return size;
-    }
-
-    public void setSize(long size) {
-        this.size = size;
     }
 
     public Album getAlbum() {

@@ -1,5 +1,6 @@
 package io.github.rerobika.rf1.service.impl;
 
+import io.github.rerobika.rf1.domain.Album;
 import io.github.rerobika.rf1.domain.User;
 import io.github.rerobika.rf1.domain.VerificationToken;
 import io.github.rerobika.rf1.exception.EmailExistsException;
