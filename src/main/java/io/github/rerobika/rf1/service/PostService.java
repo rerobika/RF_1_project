@@ -20,7 +20,6 @@ public interface PostService {
     public List<Post> getPostWithStructure(long id);
     public Post getParent(Post post);
     public List<Post> getPostByUser(User user);
-    public List<Post> getPostToUser(User user);
     public List<Post> getComments(Post post);
     public List<Post> getComments(List<Post> posts);
 }
