@@ -40,7 +40,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
-    public Album getNamedAlbum(long id, String name) {
-        return albumRep.getAlbumByOwnerAndName(id, name);
+    public Album getNamedAlbum(User user, String name) {
+        return albumRep.getAlbumByOwnerAndName(user, name);
     }
 }

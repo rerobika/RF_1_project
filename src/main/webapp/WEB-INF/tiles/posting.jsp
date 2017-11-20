@@ -101,7 +101,8 @@
                                                 <button type="submit" class="btn btn-default" name="sendmypost" >Comment</button>
                                             </div>
                                         </div>
-                                </form:form>
+                                    </form:form>
+                                </div>
                             </div>
                         </div>
                     </div>

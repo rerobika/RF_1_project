@@ -67,7 +67,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> getPostToUser(User user) {
 
-        return (List<Post>) postRep.findByToAndParentIsNull(user);
+        return (List<Post>) postRep.findByToAndParentIsNullOrderByDateDesc(user);
     }
 
     @Override

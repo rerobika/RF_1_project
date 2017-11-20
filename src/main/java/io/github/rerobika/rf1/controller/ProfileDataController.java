@@ -103,9 +103,9 @@ public class ProfileDataController {
 
                 postInfo.setText("&/img/post_picture/" + fileName + " "+ postInfo.getText());
 
-                //Picture post_pic = new Picture("/img/post_picture/" + fileName, albumService.getNamedAlbum(profile_id, albumService.POST_ALBUM));
+                Picture post_pic = new Picture("/img/post_picture/" + fileName, albumService.getNamedAlbum(userService.getUser(profile_id), albumService.POST_ALBUM));
 
-                //pictureService.addPicture(post_pic);
+                pictureService.addPicture(post_pic);
 
                 upload_file(file,UPLOADED_FOLDER + File.separator + fileName);
 
@@ -173,7 +173,7 @@ public class ProfileDataController {
                 String UPLOADED_FOLDER = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "webapp" +  File.separator  + "img" +  File.separator  + "profile_picture";
                 String fileName = new String(new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss-SSS").format(new Date()) + "_"+  file.getOriginalFilename());
 
-                Picture profile_pic = new Picture("/img/profile_picture/" + fileName, albumService.getNamedAlbum(profile_id, albumService.PROFILE_PICTURE_ALBUM));
+                Picture profile_pic = new Picture("/img/profile_picture/" + fileName, albumService.getNamedAlbum(userService.getUser(profile_id), albumService.PROFILE_PICTURE_ALBUM));
 
                 pictureService.addPicture(profile_pic);
 
