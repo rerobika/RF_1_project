@@ -110,8 +110,8 @@ public class AuthController {
             try {
                 user = userService.register(user);
 
-                Album profile_picture_album = new Album("profile_picture", new Date(),user);
-                Album post_picture_album = new Album("post_picture", new Date(),user);
+                Album profile_picture_album = new Album(albumService.PROFILE_PICTURE_ALBUM, new Date(),user);
+                Album post_picture_album = new Album(albumService.POST_ALBUM, new Date(),user);
 
 
                 albumService.addAlbum(profile_picture_album);

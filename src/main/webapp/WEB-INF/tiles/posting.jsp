@@ -32,22 +32,22 @@
         </div>
 
         <c:if test="${not empty posts}">
-            <c:forEach items="${posts}" var="posted">
+            <c:forEach items="${posts}" var="posted" varStatus="status">
                 <div class="panel panel-default post">
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-2">
-                                <a href="profile/${posted.id}}" class="post-avatar thumbnail"><img src="${profilePerson.profilePicID.location}" alt="Profile picture"><div class="text-center">${posted.from.name}</div></a> <!-- TODO: FIX img src-->
+                                <a href="${posted.from.id}" class="post-avatar thumbnail"><img src="${posted_from[status.index].profilePicID.location}" alt="Profile picture"><div class="text-center">${posted.from.name}</div></a> <!-- TODO: FIX img src-->
                                 <div class="likes text-center">${posted.likeNumber}</div> <!-- TODO: FIX like number-->
                             </div>
                             <div class="col-sm-10">
                                 <div class="bubble">
                                     <div class="pointer">
-                                        <c:if test="${currentPerson.user.id == profilePerson.user.id}">
-                                            <p><a href="${currentPerson.user.id}"> ${currentPerson.user.name}</a></p>
+                                        <c:if test="${posted.from.id == posted.to.id}">
+                                            <p><a href="${posted.from.id}"> ${posted.from.name}</a></p>
                                         </c:if>
-                                        <c:if test="${currentPerson.user.id != profilePerson.user.id}">
-                                            <p><a href="${currentPerson.user.id}"> ${currentPerson.user.name}</a> -> <a href="${profilePerson.user.id}"> ${profilePerson.user.name}</a></p>
+                                        <c:if test="${posted.from.id != posted.to.id}">
+                                            <p><a href="${posted.from.id}"> ${posted.from.name}</a> -> <a href="${posted.to.id}"> ${posted.to.name}</a></p>
                                         </c:if>
                                         <hr>
                                         <c:forTokens items="${posted.text}" delims=" " var="mySplit">
@@ -74,28 +74,34 @@
                                             <form:hidden path="to"  value="${posted.from.id}" class="post-control"/>
                                             <form:hidden path="parent" value="${posted.id}" class="post-control"/>
                                             <form:hidden path="likeNumber" value="0" class="post-control"/>
-                                            <form:input type="text" path="text" class="form-control" placeholder="enter comment"/>
                                         </div>
-                                        <button type="submit" class="btn btn-default" name="sendmypost" >Add</button>
-                                    </form:form>
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="comments">
-                                    <c:if test="${not empty comments}">
-                                        <c:forEach items="${comments}" var="comment">
-                                            <c:if test="${comment.parent.id == posted.id}">
-                                                <div class="clearfix"></div>
-                                                <div class="comment">
-                                                    <a href="#" class="comment-avatar pull-left"><img src="${profilePerson.profilePicID.location}" alt="Commenter profile pic"></a> <!-- TODO: FIX img src-->
-                                                    <div class="comment-text">
-                                                        <p>${comment.text}</p>
-                                                    </div>
-                                                </div>
-                                                <div class="clearfix"></div>
+
+
+                                        <div class="comments">
+                                            <c:if test="${not empty comments}">
+                                                <c:forEach items="${comments}" var="comment" varStatus="status">
+                                                    <c:if test="${comment.parent.id == posted.id}">
+                                                        <div class="clearfix"></div>
+                                                        <div class="comment">
+                                                            <div>
+                                                                <a href="${comment.from.id}" class="comment-avatar pull-left"><img src="${commented_from[status.index].profilePicID.location}" alt="Commenter profile pic"></a>
+                                                            </div>
+                                                            <div class="comment-text">
+                                                                <p><a href="${comment.from.id}"> ${comment.from.name}</a></p>
+                                                                <p>${comment.text}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </c:if>
+                                                </c:forEach>
                                             </c:if>
-                                        </c:forEach>
-                                    </c:if>
-                                </div>
+                                            <div class="clearfix"></div>
+                                            <div class="form-group">
+                                                <form:input type="text" path="text" class="form-control" placeholder="enter comment"/>
+                                                <button type="submit" class="btn btn-default" name="sendmypost" >Comment</button>
+                                            </div>
+                                        </div>
+                                </form:form>
                             </div>
                         </div>
                     </div>

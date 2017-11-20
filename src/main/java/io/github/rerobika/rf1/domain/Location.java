@@ -20,6 +20,8 @@ public class Location {
         this.users = users;
     }
 
+    public Location(){};
+
     public long getId() {
         return id;
     }

@@ -20,6 +20,8 @@ public class Job {
         this.users = users;
     }
 
+    public Job(){};
+
     public long getId() {
         return id;
     }

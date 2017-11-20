@@ -10,14 +10,18 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="profile">
-                    <h1 class="page-header">${profilePerson.user.name}</h1>
+                    <h1 class="page-header">${profilePerson.user.name}
+                        <c:if test="${profilePerson.user.id == currentPerson.user.id}">
+                            <button type="button" class="btn btn-primary" id="edit_profile_btn" onclick="location.href='/profile/${profilePerson.user.id }/edit';">Edit profile</button>
+                        </c:if>
+                    </h1>
+
                     <div class="row">
                         <div class="col-md-4">
                             <img src="${profilePerson.profilePicID.location}" class="img-thumbnail" alt="Profile picture">
                         </div>
                         <div class="col-md-8">
                             <ul>
-                                <li><strong>Name:</strong> ${profilePerson.user.name}</li>
                                 <li><strong>Email:</strong> ${profilePerson.user.email}</li>
                                 <li><strong>City:</strong> ${profilePerson.location}</li>
                                 <li><strong>State:</strong> ${profilePerson.location}</li>

@@ -38,4 +38,9 @@ public class PersonServiceImpl implements PersonService {
     {
         return personRepository.findByUser(user);
     }
+
+    @Override
+    public void updatePerson(Person person) {
+
+    }
 }

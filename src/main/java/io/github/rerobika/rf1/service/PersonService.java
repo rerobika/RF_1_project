@@ -10,5 +10,6 @@ public interface PersonService {
     public void addPerson(Person person);
     public void removePerson(Person person);
     public  Person getPerson(User user);
+    public void updatePerson (Person person);
 }
 

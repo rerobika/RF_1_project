@@ -19,6 +19,7 @@ public class Hobby {
         this.name = name;
         this.users = users;
     }
+    public Hobby(){};
 
     public long getId() {
         return id;

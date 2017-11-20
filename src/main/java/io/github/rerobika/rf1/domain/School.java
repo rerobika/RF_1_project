@@ -20,6 +20,8 @@ public class School {
         this.users = users;
     }
 
+    public School(){};
+
     public long getId() {
         return id;
     }

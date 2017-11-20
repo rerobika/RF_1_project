@@ -181,3 +181,7 @@ footer{
 	width: 50%;
 	height: 50%;
 }
+
+#edit_profile_btn{
+	float:right;
+}

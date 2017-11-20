@@ -11,4 +11,8 @@ public interface AlbumService {
     public void removeAlbum(Album album);
     public  Album getAlbum(long id);
     public User getOwner(Album album);
+    public Album getNamedAlbum(long id, String name);
+
+    public static final String POST_ALBUM = "post_picture";
+    public static final String PROFILE_PICTURE_ALBUM = "profile_picture";
 }

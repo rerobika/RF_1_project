@@ -34,6 +34,10 @@
         <put-attribute name="content" value="/WEB-INF/tiles/about.jsp" />
     </definition>
 
+    <definition name="app.edit" extends="app.default">
+        <put-attribute name="content" value="/WEB-INF/tiles/edit.jsp" />
+    </definition>
+
     <definition name="app.error" extends="app.default">
         <put-attribute name="content" value="/WEB-INF/tiles/error.jsp" />
     </definition>

@@ -14,6 +14,7 @@ public class AlbumServiceImpl implements AlbumService {
     @Autowired
     private AlbumRepository albumRep;
 
+
     @Override
     public List<Album> getAll()
     {
@@ -36,5 +37,10 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public User getOwner(Album album) {
         return album.getOwner();
+    }
+
+    @Override
+    public Album getNamedAlbum(long id, String name) {
+        return albumRep.getAlbumByOwnerAndName(id, name);
     }
 }
