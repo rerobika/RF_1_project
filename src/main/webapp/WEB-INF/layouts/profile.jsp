@@ -10,12 +10,30 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="profile">
-                    <h1 class="page-header">${profilePerson.user.name}
-                        <c:if test="${profilePerson.user.id == currentPerson.user.id}">
-                            <button type="button" class="btn btn-primary" id="edit_profile_btn" onclick="location.href='/profile/${profilePerson.user.id }/edit';">Edit profile</button>
-                        </c:if>
-                    </h1>
+                    <form:form method="post">
+                        <h1 class="page-header">${profilePerson.user.name}
+                            <c:if test="${profilePerson.user.id == currentPerson.user.id}">
+                                <button type="button" class="btn btn-primary" id="edit_profile_btn" onclick="location.href='/profile/${profilePerson.user.id }/edit';">Edit profile</button>
+                            </c:if>
+                            <c:if test="${profilePerson.user.id != currentPerson.user.id && relation_status == -1}">
+                                <button type="submit" class="btn btn-primary" id="edit_profile_btn" name="mark">Mark as friend</button>
+                                <div style="clear:both;"></div>
+                            </c:if>
+                            <c:if test="${profilePerson.user.id != currentPerson.user.id && relation.from == currentPerson && relation.to == profilePerson && relation_status == 0}">
+                                <button type="button" class="btn btn-primary" id="edit_profile_btn" disabled>Friend request send</button>
+                                <div style="clear:both;"></div>
+                            </c:if>
+                            <c:if test="${profilePerson.user.id != currentPerson.user.id && relation.from == profilePerson && relation.to == currentPerson && relation_status == 0}">
+                                <button type="submit" class="btn btn-primary" id="edit_profile_btn" name="confirm">Confirm friend request</button>
+                                <div style="clear:both;"></div>
+                            </c:if>
+                            <c:if test="${profilePerson.user.id != currentPerson.user.id && relation_status == 1}">
+                                <button type="button" class="btn btn-primary" id="edit_profile_btn" disabled>Already friends</button>
+                                <div style="clear:both;"></div>
+                            </c:if>
 
+                        </h1>
+                    </form:form>
                     <div class="row">
                         <div class="col-md-4">
                             <img src="${profilePerson.profilePicID.location}" class="img-thumbnail" alt="Profile picture">
@@ -36,22 +54,18 @@
             <div class="col-md-4">
                 <div class="panel panel-default friends">
                     <div class="panel-heading">
-                        <h3 class="panel-title">My Friends</h3>
+                        <h3 class="panel-title">Friends</h3>
                     </div>
                     <div class="panel-body">
                         <ul>
-                            <li><a href="profile.html" class="thumbnail"><img src="img/user.png" alt=""></a></li>
-                            <li><a href="profile.html" class="thumbnail"><img src="img/user.png" alt=""></a></li>
-                            <li><a href="profile.html" class="thumbnail"><img src="img/user.png" alt=""></a></li>
-                            <li><a href="profile.html" class="thumbnail"><img src="img/user.png" alt=""></a></li>
-                            <li><a href="profile.html" class="thumbnail"><img src="img/user.png" alt=""></a></li>
-                            <li><a href="profile.html" class="thumbnail"><img src="img/user.png" alt=""></a></li>
-                            <li><a href="profile.html" class="thumbnail"><img src="img/user.png" alt=""></a></li>
-                            <li><a href="profile.html" class="thumbnail"><img src="img/user.png" alt=""></a></li>
-                            <li><a href="profile.html" class="thumbnail"><img src="img/user.png" alt=""></a></li>
+                            <c:if test="${not empty friends}">
+                                <c:forEach items="${friends}" var="friend" varStatus="status">
+                                    <li><a href="${friend.id}" class="thumbnail"><img src="${friend.profilePicID.location}" alt="friend_profile_picture"></a></li>
+                                </c:forEach>
+                            </c:if>
                         </ul>
                         <div class="clearfix"></div>
-                        <a class="btn btn-primary" href="#">View All Friends</a>
+                        <a class="btn btn-primary" href="/friends/${profilePerson.user.id}">View All Friends</a>
                     </div>
                 </div>
                 <div class="panel panel-default groups">

@@ -11,4 +11,5 @@ import java.util.Collection;
 @Repository
 public interface RelationRepository extends CrudRepository<Relation, Long> {
     Collection<Relation> findByFromOrTo(Person to, Person from);
+    Relation findByFromAndTo (Person from, Person to);
 }

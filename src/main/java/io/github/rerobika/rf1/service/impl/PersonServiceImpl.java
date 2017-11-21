@@ -3,6 +3,7 @@ package io.github.rerobika.rf1.service.impl;
 import com.sun.javafx.logging.JFRInputEvent;
 import io.github.rerobika.rf1.domain.Person;
 import io.github.rerobika.rf1.domain.Relation;
+import io.github.rerobika.rf1.domain.RelationState;
 import io.github.rerobika.rf1.domain.User;
 import io.github.rerobika.rf1.repository.PersonRepository;
 import io.github.rerobika.rf1.repository.RelationRepository;
@@ -56,13 +57,13 @@ public class PersonServiceImpl implements PersonService {
         List<Person>  friends = new ArrayList<Person>();
         for(Relation rel : friendRel)
         {
-            if(rel.getFrom().equals(currentPerson)) {
-                friends.add(rel.getFrom());
+            if(rel.getFrom().equals(currentPerson) && rel.getState() == RelationState.friend) {
+                friends.add(rel.getTo());
                 continue;
             }
-            if(rel.getTo().equals(currentPerson))
+            if(rel.getTo().equals(currentPerson) && rel.getState() == RelationState.friend)
             {
-                friends.add(rel.getTo());
+                friends.add(rel.getFrom());
                 continue;
             }
         }

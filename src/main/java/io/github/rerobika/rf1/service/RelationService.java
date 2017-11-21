@@ -11,4 +11,5 @@ public interface RelationService {
     public void addRelation(Relation relation);
     public void removeRelation(Relation relation);
     public List<Relation> getRelations(Person person);
+    public Relation getRelationFromTo(Person from, Person to);
 }

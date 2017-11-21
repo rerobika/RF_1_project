@@ -40,6 +40,8 @@ public class ProfileDataController {
     PictureService pictureService;
     @Autowired
     AlbumService albumService;
+    @Autowired
+    RelationService relationService;
 
     @GetMapping("/profile/{profile_id}")
     ModelAndView profile(@PathVariable long profile_id) {
@@ -72,6 +74,24 @@ public class ProfileDataController {
         for (Post c : comments) {
             commented_from.add(personService.getPerson(c.getFrom()));
         }
+        List<Relation> relations = relationService.getRelations(profilePerson);
+        Relation relation = new Relation();
+        int pending = -1;
+        if (currentPerson != profilePerson){
+
+            for (Relation r: relations) {
+                if ((r.getFrom() == currentPerson && r.getTo() == profilePerson) || (r.getFrom() == profilePerson && r.getTo() == currentPerson)){
+                    relation = r;
+                    break;
+                }
+            }
+
+            if (relation.getFrom() != null){
+                pending = relation.getState() == RelationState.marked ? 0 : 1;
+            }
+
+        }
+
 
         Post post = new Post();
         modelAndView.addObject("currentPerson", currentPerson);
@@ -81,6 +101,9 @@ public class ProfileDataController {
         modelAndView.addObject("posted_from", posted_from);
         modelAndView.addObject("comments",comments);
         modelAndView.addObject("commented_from",commented_from);
+        modelAndView.addObject("friends",personService.getFriends(profilePerson));
+        modelAndView.addObject("relation",relation);
+        modelAndView.addObject("relation_status",pending);
         return modelAndView;
     }
 
@@ -113,6 +136,55 @@ public class ProfileDataController {
             }
 
         }
+        modelAndView.setViewName("redirect:/profile/"+profile_id);
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/profile/{profile_id}",params = "mark")
+    ModelAndView mark_friend(@PathVariable long profile_id, ModelAndView modelAndView)
+    {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userService.getUserByEmail(username);
+        User profileUser;
+        Person profilePerson;
+        Person currentPerson = personService.getPerson(currentUser);
+        profileUser = userService.getUser(profile_id);
+        if (profileUser != null)
+        {
+            profilePerson = personService.getPerson(profileUser);
+        }
+        else
+        {
+            modelAndView.setViewName("redirect:/error");
+            return modelAndView;
+        }
+
+        relationService.addRelation(new Relation(currentPerson, profilePerson, new Date(), RelationState.marked ));
+        modelAndView.setViewName("redirect:/profile/"+profile_id);
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/profile/{profile_id}",params = "confirm")
+    ModelAndView confirm_friend(@PathVariable long profile_id, ModelAndView modelAndView)
+    {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentUser = userService.getUserByEmail(username);
+        User profileUser;
+        Person profilePerson;
+        Person currentPerson = personService.getPerson(currentUser);
+        profileUser = userService.getUser(profile_id);
+        if (profileUser != null)
+        {
+            profilePerson = personService.getPerson(profileUser);
+        }
+        else
+        {
+            modelAndView.setViewName("redirect:/error");
+            return modelAndView;
+        }
+        Relation relation = relationService.getRelationFromTo(profilePerson, currentPerson);
+        relation.setState(RelationState.friend);
+        relationService.addRelation(relation);
         modelAndView.setViewName("redirect:/profile/"+profile_id);
         return modelAndView;
     }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -28,14 +29,12 @@ public class FriendsController {
         this.personService = personService;
         this.userService = userService;
     }
-    @GetMapping("/friends")
-    public ModelAndView getFriends()
+    @GetMapping("/friends/{profile_id}")
+    public ModelAndView getFriends(@PathVariable long profile_id)
     {
         ModelAndView modelAndView = new ModelAndView();
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User currentUser = userService.getUserByEmail(username);
-        Person currentPerson = personService.getPerson(currentUser);
-        modelAndView.addObject("friends",personService.getFriends(currentPerson));
+        Person profilePerson = personService.getPerson(userService.getUser(profile_id));
+        modelAndView.addObject("friends",personService.getFriends(profilePerson));
         modelAndView.setViewName("app.friends");
         return modelAndView;
     }

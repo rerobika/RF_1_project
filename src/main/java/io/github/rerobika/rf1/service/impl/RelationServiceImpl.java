@@ -22,7 +22,7 @@ public class RelationServiceImpl implements RelationService {
 
     @Override
     public void addRelation(Relation relation) {
-
+        relationRepository.save(relation);
     }
 
     @Override
@@ -35,4 +35,10 @@ public class RelationServiceImpl implements RelationService {
     {
         return (List<Relation>)relationRepository.findByFromOrTo(person,person);
     }
+
+    @Override
+    public Relation getRelationFromTo(Person from, Person to) {
+        return relationRepository.findByFromAndTo(from, to);
+    }
+
 }
