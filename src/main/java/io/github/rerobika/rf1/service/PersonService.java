@@ -11,5 +11,6 @@ public interface PersonService {
     public void removePerson(Person person);
     public  Person getPerson(User user);
     public void updatePerson (Person person);
+    public List<Person> getFriends(Person currentPerson);
 }
 

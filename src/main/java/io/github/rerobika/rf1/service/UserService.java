@@ -1,5 +1,6 @@
 package io.github.rerobika.rf1.service;
 
+import io.github.rerobika.rf1.domain.Relation;
 import io.github.rerobika.rf1.domain.User;
 import io.github.rerobika.rf1.exception.EmailExistsException;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -61,4 +62,4 @@ public interface UserService extends UserDetailsService {
     User getUser(String verificationToken);
 
     User getUserByEmail(final String email);
-    }
+}

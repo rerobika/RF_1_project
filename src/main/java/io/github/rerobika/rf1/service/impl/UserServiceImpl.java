@@ -1,6 +1,7 @@
 package io.github.rerobika.rf1.service.impl;
 
 import io.github.rerobika.rf1.domain.Album;
+import io.github.rerobika.rf1.domain.Relation;
 import io.github.rerobika.rf1.domain.User;
 import io.github.rerobika.rf1.domain.VerificationToken;
 import io.github.rerobika.rf1.exception.EmailExistsException;
@@ -8,13 +9,16 @@ import io.github.rerobika.rf1.repository.UserRepository;
 import io.github.rerobika.rf1.repository.VerificationTokenRepository;
 import io.github.rerobika.rf1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 

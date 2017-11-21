@@ -8,6 +8,9 @@ import java.util.Date;
 @Entity
 public class Relation {
 
+    public Relation() {
+
+    }
 
     @GeneratedValue
     @Id
