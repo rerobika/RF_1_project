@@ -12,5 +12,8 @@ public interface PersonService {
     public  Person getPerson(User user);
     public void updatePerson (Person person);
     public List<Person> getFriends(Person currentPerson);
+    public List<Person> getNonFriends(Person currentPerson);
+    public List<Person> getPendingToFriends(Person currentPerson);
+    public List<Person> getPendingFromFriends(Person currentPerson);
 }
 

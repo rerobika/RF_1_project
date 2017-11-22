@@ -42,7 +42,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/home",
                         "/post",
                         "/profile",
-                        "/profile/*")
+                        "/profile/*",
+                        "/members",
+                        "friends")
                 .hasRole("USER")
                 .and()
                 .formLogin()

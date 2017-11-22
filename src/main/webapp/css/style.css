@@ -182,6 +182,10 @@ footer{
 	height: 50%;
 }
 
-#edit_profile_btn{
+.button_pull_right{
 	float:right;
+}
+
+.pull_down{
+	margin-top: 24%;
 }

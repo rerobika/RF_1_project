@@ -15,16 +15,17 @@
                         <c:forEach items="${friends}" var="friend" varStatus="status">
                             <div class="row member-row">
                                 <div class="col-md-3">
-                                    <a href="profile/${friend.id}"><img src="${friend.profilePicID.location}" class="img-thumbnail" alt="Profile pic"></a>
+                                    <a href="/profile/${friend.id}"><img src="${friend.profilePicID.location}" class="img-thumbnail" alt="Profile pic"></a>
                                     <div class="text-center">
-                                        <a href="profile/${friend.id}">${friend.user.name}</a>
+                                        <a href="/profile/${friend.id}">${friend.user.name}</a>
                                     </div>
                                 </div>
+
                                 <div class="col-md-3">
                                     <p><a href="#" class="btn btn-default btn-block"><i class="fa fa-envelope"></i> Send Message</a></p>
                                 </div>
                                 <div class="col-md-3">
-                                    <p><a href="profile/${friend.id}" class="btn btn-primary btn-block"><i class="fa fa-edit"></i> View Profile</a></p>
+                                    <p><a href="/profile/${friend.id}" class="btn btn-primary btn-block"><i class="fa fa-edit"></i> View Profile</a></p>
                                 </div>
                             </div>
                         </c:forEach>

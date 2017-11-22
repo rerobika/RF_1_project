@@ -13,22 +13,22 @@
                     <form:form method="post">
                         <h1 class="page-header">${profilePerson.user.name}
                             <c:if test="${profilePerson.user.id == currentPerson.user.id}">
-                                <button type="button" class="btn btn-primary" id="edit_profile_btn" onclick="location.href='/profile/${profilePerson.user.id }/edit';">Edit profile</button>
+                                <button type="button" class="btn btn-primary button_pull_right" onclick="location.href='/profile/${profilePerson.user.id }/edit';">Edit profile</button>
                             </c:if>
                             <c:if test="${profilePerson.user.id != currentPerson.user.id && relation_status == -1}">
-                                <button type="submit" class="btn btn-primary" id="edit_profile_btn" name="mark">Mark as friend</button>
+                                <button type="submit" class="btn btn-primary button_pull_right" name="mark">Mark as friend</button>
                                 <div style="clear:both;"></div>
                             </c:if>
                             <c:if test="${profilePerson.user.id != currentPerson.user.id && relation.from == currentPerson && relation.to == profilePerson && relation_status == 0}">
-                                <button type="button" class="btn btn-primary" id="edit_profile_btn" disabled>Friend request send</button>
+                                <button type="button" class="btn btn-primary button_pull_right" disabled>Friend request sent</button>
                                 <div style="clear:both;"></div>
                             </c:if>
                             <c:if test="${profilePerson.user.id != currentPerson.user.id && relation.from == profilePerson && relation.to == currentPerson && relation_status == 0}">
-                                <button type="submit" class="btn btn-primary" id="edit_profile_btn" name="confirm">Confirm friend request</button>
+                                <button type="submit" class="btn btn-primary button_pull_right" name="confirm">Confirm friend request</button>
                                 <div style="clear:both;"></div>
                             </c:if>
                             <c:if test="${profilePerson.user.id != currentPerson.user.id && relation_status == 1}">
-                                <button type="button" class="btn btn-primary" id="edit_profile_btn" disabled>Already friends</button>
+                                <button type="button" class="btn btn-primary button_pull_right" disabled>Already friends</button>
                                 <div style="clear:both;"></div>
                             </c:if>
 

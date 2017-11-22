@@ -23,3 +23,5 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+src/main/webapp/img/post_picture
+src/main/webapp/img/profile_picture

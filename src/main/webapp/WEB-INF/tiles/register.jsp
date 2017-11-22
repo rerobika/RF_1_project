@@ -22,36 +22,48 @@
 
 
             <div class="panel-body">
-                <form:form method="post" modelAttribute="person" class="login-form">
+                <form:form method="post" modelAttribute="person" class="form-horizontal">
 
-                    <div class="input-group">
-                        <form:input type="text" path="user.name" placeholder="Full name"
+                    <div class="form-group">
+                        <div class="col-lg-8">
+                            <form:input type="text" path="user.name" placeholder="Full name"
                                     class="form-control" />
+                        </div>
                     </div>
 
-                    <div class="input-group">
-                        <form:input type="text" path="user.email" placeholder="Email"
+                    <div class="form-group">
+                        <div class="col-lg-8">
+                            <form:input type="text" path="user.email" placeholder="Email"
                                     class="form-control" />
+                        </div>
                     </div>
 
-                    <div class="input-group">
-                        <form:input type="password" path="user.plainPassword" placeholder="Password"
+                    <div class="form-group">
+                        <div class="col-lg-8">
+                            <form:input type="password" path="user.plainPassword" placeholder="Password"
                                     class="form-control" />
+                        </div>
                     </div>
 
-                    <div class="input-group">
-                        <form:input type="password" path="user.repeatPassword"
+                    <div class="form-group">
+                        <div class="col-lg-8">
+                            <form:input type="password" path="user.repeatPassword"
                                     placeholder="Repeat password" class="form-control" />
+                        </div>
                     </div>
 
-                    <div class="input-group">
-                        <form:input type="text" path="refID" placeholder="Reference code"
+                    <div class="form-group">
+                        <div class="col-lg-8">
+                            <form:input type="text" path="refID" placeholder="Reference code"
                                     class="form-control" />
 
+                        </div>
                     </div>
 
-                    <div class="input-group">
-                        <button type="submit" class="btn-primary pull-right">Register</button>
+                    <div class="form-group">
+                        <div class="col-lg-8">
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </div>
                     </div>
 
                 </form:form>
