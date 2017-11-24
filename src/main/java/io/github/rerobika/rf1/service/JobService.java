@@ -8,5 +8,6 @@ public interface JobService {
     public List<Job> getAll();
     public void addJob(Job job);
     public void removeJob(Job job);
-    public  Job getJob(long id);
+    public Job getJob(long id);
+    public Job getJobByName(String name);
 }

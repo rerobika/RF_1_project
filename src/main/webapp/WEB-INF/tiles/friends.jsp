@@ -10,7 +10,14 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="members">
-                    <h1 class="page-header">Friends</h1>
+                    <c:if test="${currentPerson.user.id == profilePerson.user.id}">
+                        <h1 class="page-header">My friends</h1>
+                    </c:if>
+
+                    <c:if test="${currentPerson.user.id != profilePerson.user.id}">
+                        <h1 class="page-header">${currentPerson.user.name}'s friends</h1>
+                    </c:if>
+
                     <c:if test="${not empty friends}">
                         <c:forEach items="${friends}" var="friend" varStatus="status">
                             <div class="row member-row">

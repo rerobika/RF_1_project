@@ -37,18 +37,19 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-2">
-                                <a href="${posted.from.id}" class="post-avatar thumbnail"><img src="${posted_from[status.index].profilePicID.location}" alt="Profile picture"><div class="text-center">${posted.from.name}</div></a> <!-- TODO: FIX img src-->
+                                <a href="/profile/${posted.from.id}" class="post-avatar thumbnail"><img src="${posted_from[status.index].profilePicID.location}" alt="Profile picture"><div class="text-center">${posted.from.name}</div></a> <!-- TODO: FIX img src-->
                                 <div class="likes text-center">${posted.likeNumber}</div> <!-- TODO: FIX like number-->
                             </div>
                             <div class="col-sm-10">
                                 <div class="bubble">
                                     <div class="pointer">
                                         <c:if test="${posted.from.id == posted.to.id}">
-                                            <p><a href="${posted.from.id}"> ${posted.from.name}</a></p>
+                                            <p><a href="/profile/${posted.from.id}"> ${posted.from.name}</a></p>
                                         </c:if>
                                         <c:if test="${posted.from.id != posted.to.id}">
-                                            <p><a href="${posted.from.id}"> ${posted.from.name}</a> -> <a href="${posted.to.id}"> ${posted.to.name}</a></p>
+                                            <p><a href="/profile/${posted.from.id}"> ${posted.from.name}</a> -> <a href="/profile/${posted.to.id}"> ${posted.to.name}</a></p>
                                         </c:if>
+                                        <div class="pull-right">${posted.date}</div>
                                         <hr>
                                         <c:forTokens items="${posted.text}" delims=" " var="mySplit">
                                             <c:choose>
@@ -84,10 +85,11 @@
                                                         <div class="clearfix"></div>
                                                         <div class="comment">
                                                             <div>
-                                                                <a href="${comment.from.id}" class="comment-avatar pull-left"><img src="${commented_from[status.index].profilePicID.location}" alt="Commenter profile pic"></a>
+                                                                <a href="/profile/${comment.from.id}" class="comment-avatar pull-left"><img src="${commented_from[status.index].profilePicID.location}" alt="Commenter profile pic"></a>
                                                             </div>
                                                             <div class="comment-text">
-                                                                <p><a href="${comment.from.id}"> ${comment.from.name}</a></p>
+                                                                <p><a href="/profile/${comment.from.id}"> ${comment.from.name}</a></p>
+                                <div class="pull-right">${posted.date}</div>
                                                                 <p>${comment.text}</p>
                                                             </div>
                                                         </div>

@@ -1,21 +1,23 @@
 package io.github.rerobika.rf1.service.impl;
 
+import io.github.rerobika.rf1.domain.Person;
 import io.github.rerobika.rf1.domain.Post;
 import io.github.rerobika.rf1.domain.User;
 import io.github.rerobika.rf1.repository.PostRepository;
+import io.github.rerobika.rf1.service.PersonService;
 import io.github.rerobika.rf1.service.PostService;
 import io.github.rerobika.rf1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 @Service
 public class PostServiceImpl implements PostService {
     @Autowired
     private PostRepository postRep;
     @Autowired
-    private UserService userServ;
+    private PersonService personService;
 
 
     @Override
@@ -83,6 +85,20 @@ public class PostServiceImpl implements PostService {
             commentsForPosts.addAll(getComments(post));
         }
         return  commentsForPosts;
+    }
+
+    @Override
+    public List<Post> getAllFriendsPost(Person profilePerson) {
+        List<Person> friends = personService.getFriends(profilePerson);
+        friends.add(profilePerson);
+        List<Post> friendsPosts = new LinkedList<Post>();
+
+        for (Person p : friends) {
+            friendsPosts.addAll(postRep.findByFromAndParentIsNullOrderByDateDesc(p.getUser()));
+        }
+
+        Collections.sort(friendsPosts, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+        return friendsPosts;
     }
 
 }

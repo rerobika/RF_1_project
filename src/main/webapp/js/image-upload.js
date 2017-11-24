@@ -23,6 +23,10 @@ $(document).ready( function() {
                 $('#img-upload').attr('src', e.target.result);
             }
 
+            reader.onload = function (e) {
+                $('#edit_profile_pic').attr('src', e.target.result);
+            }
+
             reader.readAsDataURL(input.files[0]);
         }
     }
@@ -30,4 +34,5 @@ $(document).ready( function() {
     $("#imgInp").change(function(){
         readURL(this);
     });
+
 });

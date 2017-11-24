@@ -22,6 +22,10 @@ public class Job {
 
     public Job(){};
 
+    public Job(String name){
+        this.name = name;
+    };
+
     public long getId() {
         return id;
     }

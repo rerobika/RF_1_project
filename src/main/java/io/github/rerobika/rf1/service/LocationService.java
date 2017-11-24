@@ -9,4 +9,5 @@ public interface LocationService {
     public void addLocation(Location location);
     public void removeLocation(Location location);
     public  Location getLocation(long id);
+    public Location getLocationByName(String name);
 }

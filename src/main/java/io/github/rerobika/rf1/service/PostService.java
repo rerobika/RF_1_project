@@ -1,5 +1,6 @@
 package io.github.rerobika.rf1.service;
 
+import io.github.rerobika.rf1.domain.Person;
 import io.github.rerobika.rf1.domain.Post;
 import io.github.rerobika.rf1.domain.User;
 import org.springframework.stereotype.Service;
@@ -23,4 +24,6 @@ public interface PostService {
     public List<Post> getPostToUser(User user);
     public List<Post> getComments(Post post);
     public List<Post> getComments(List<Post> posts);
+
+    public List<Post> getAllFriendsPost(Person profilePerson);
 }

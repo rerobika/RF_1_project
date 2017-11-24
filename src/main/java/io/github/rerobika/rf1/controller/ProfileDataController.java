@@ -21,11 +21,10 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class ProfileDataController {
@@ -42,6 +41,18 @@ public class ProfileDataController {
     AlbumService albumService;
     @Autowired
     RelationService relationService;
+    @Autowired
+    SchoolService schoolService;
+    @Autowired
+    HobbyService hobbyService;
+    @Autowired
+    JobService jobService;
+    @Autowired
+    LocationService locationService;
+
+    private boolean passwordUpdateFail = false;
+
+
 
     @GetMapping("/profile/{profile_id}")
     ModelAndView profile(@PathVariable long profile_id) {
@@ -64,13 +75,13 @@ public class ProfileDataController {
                 return modelAndView;
         }
         List<Post> posts = postService.getPostToUser(profileUser);
-        List<Person> posted_from = new LinkedList<Person>() { };
+        List<Person> posted_from = new LinkedList<Person>();
         for (Post p : posts) {
             posted_from.add(personService.getPerson(p.getFrom()));
         }
 
         List<Post> comments = postService.getComments(postService.getPostByUser(profileUser));
-        List<Person> commented_from = new LinkedList<Person>() { };
+        List<Person> commented_from = new LinkedList<Person>();
         for (Post c : comments) {
             commented_from.add(personService.getPerson(c.getFrom()));
         }
@@ -200,46 +211,34 @@ public class ProfileDataController {
 
     @GetMapping("/profile/{profile_id}/edit")
     ModelAndView edit_profile(@PathVariable long profile_id) {
+        Person profilePerson = personService.getPerson(userService.getUser(profile_id));
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("app.edit");
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User currentUser = userService.getUserByEmail(username);
-        User profileUser;
-        Person profilePerson;
-
-        Person currentPerson = personService.getPerson(currentUser);
-        profileUser = userService.getUser(profile_id);
-        if (profileUser != null)
-        {
-            profilePerson = personService.getPerson(profileUser);
-        }
-        else
-        {
-            modelAndView.setViewName("redirect:/error");
-            return modelAndView;
-        }
-
-        if(currentUser != null && profileUser.getId() != currentUser.getId()){
-            modelAndView.setViewName("redirect:/home");
-            return modelAndView;
-        }
-
-        modelAndView.getModel().put("person", profilePerson);
+        modelAndView.addObject("profilePerson", profilePerson);
+        modelAndView.addObject("passwordUpdateFail", passwordUpdateFail);
+        passwordUpdateFail = false;
         return modelAndView;
     }
 
-    @PostMapping(value = "/profile/{profile_id}/edit",params = "update_profile")
-    ModelAndView updateProfile(@PathVariable long profile_id, ModelAndView modelAndView, @ModelAttribute(value="userInfo") @Valid Person person,
-                               @RequestParam(value = "file", required = false) MultipartFile file, BindingResult result)
+    @PostMapping(value = "/profile/{profile_id}/edit")
+    ModelAndView updateProfile(@PathVariable long profile_id, ModelAndView modelAndView,
+                               @RequestParam(value = "file", required = false) MultipartFile file,
+                               @RequestParam(value = "name", required = false) String name,
+                               @RequestParam(value = "date", required = false) String birth,
+                               @RequestParam(value = "school", required = false) String school,
+                               @RequestParam(value = "job", required = false) String job,
+                               @RequestParam(value = "location", required = false) String location,
+                               @RequestParam(value = "hobby", required = false) String hobby,
+                               @RequestParam(value = "plainPassword", required = false) String plainPassword,
+                               @RequestParam(value = "plainPasswordOld", required = false) String plainPasswordOld,
+                               BindingResult result)
     {
+        Person profilePerson = personService.getPerson(userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
+
         if(!result.hasErrors())
         {
 
-            if (file == null || file.isEmpty())
-            {
-                personService.addPerson(person);
-            }
-            else
+            if (!(file == null || file.isEmpty()))
             {
                 //Save the uploaded file to this folder
                 String UPLOADED_FOLDER = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "webapp" +  File.separator  + "img" +  File.separator  + "profile_picture";
@@ -251,15 +250,91 @@ public class ProfileDataController {
 
                 upload_file(file,UPLOADED_FOLDER + File.separator + fileName);
 
-                person.setProfilePicID(profile_pic);
-
-                personService.addPerson(person);
+                profilePerson.setProfilePicID(profile_pic);
             }
+
+            if (!name.isEmpty()){
+                profilePerson.getUser().setName(name);
+            }
+
+            if (!school.isEmpty()){
+                School new_school = new School(school);
+                School existing_school = schoolService.getSchoolByName(school);
+                if (existing_school != null){
+                    profilePerson.setSchool(existing_school);
+                }
+                else{
+                    profilePerson.setSchool(new_school);
+                    schoolService.addSchool(new_school);
+                }
+            }
+
+            if (!job.isEmpty()){
+                Job new_job = new Job(job);
+                Job existing_job = jobService.getJobByName(job);
+                if (existing_job != null){
+                    profilePerson.setJob(existing_job);
+                }
+                else{
+                    profilePerson.setJob(new_job);
+                    jobService.addJob(new_job);
+                }
+            }
+
+            if (!hobby.isEmpty()){
+                Hobby new_hobby = new Hobby(hobby);
+                Hobby existing_hobby = hobbyService.getHobbyByName(hobby);
+                if (existing_hobby != null){
+                    profilePerson.setHobby(existing_hobby);
+                }
+                else{
+                    profilePerson.setHobby(new_hobby);
+                    hobbyService.addHobby(new_hobby);
+                }
+            }
+
+            if (!location.isEmpty()){
+                Location new_location = new Location(location);
+                Location existing_location= locationService.getLocationByName(hobby);
+                if (existing_location != null){
+                    profilePerson.setLocation(existing_location);
+                }
+                else{
+                    profilePerson.setLocation(new_location);
+                    locationService.addLocation(new_location);
+                }
+            }
+
+            if(!birth.isEmpty()){
+                DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+                Date birthDate = new Date();
+                try {
+                    birthDate = format.parse(birth);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                profilePerson.setBirth(birthDate);
+            }
+
+            if (!plainPassword.isEmpty()){
+                if (plainPasswordOld.equals(profilePerson.getUser().getPlainPassword()))
+                {
+                    profilePerson.getUser().setPlainPassword(plainPassword);
+                    userService.encodePassword(profilePerson.getUser());
+                }
+                else
+                {
+                    passwordUpdateFail = true;
+                }
+
+            }
+
+            personService.addPerson(profilePerson);
 
         }
 
 
-        modelAndView.setViewName("redirect:/profile/"+profile_id);
+        modelAndView.setViewName("redirect:/profile/" + profile_id + "/edit");
         return modelAndView;
     }
 

@@ -29,6 +29,11 @@
         }
         var pass=document.forms["formReg"]["user.plainPassword"].value;
         var rePass=document.forms["formReg"]["user.repeatPassword"].value;
+        if(pass.length < 5 && pass.length > 20){
+            swal("Error!","Password must be between 5 and 20 characters.","error");
+            return false;
+        }
+
         if(pass==""){
             swal("Error!","Password cant be empty.","error");
             return false;
@@ -82,7 +87,7 @@
 
                     <div class="form-group">
                         <div class="col-lg-8">
-                            <form:input type="password" path="user.repeatPassword"
+                            <input type="password"
                                     placeholder="Repeat password" class="form-control" />
                         </div>
                     </div>

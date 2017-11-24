@@ -44,7 +44,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/profile",
                         "/profile/*",
                         "/members",
-                        "friends")
+                        "friends",
+                        "friends/*,",
+                        "/profile/*/edit")
                 .hasRole("USER")
                 .and()
                 .formLogin()

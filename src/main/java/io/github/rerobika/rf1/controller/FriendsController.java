@@ -41,8 +41,10 @@ public class FriendsController {
     public ModelAndView getFriends(@PathVariable long profile_id)
     {
         ModelAndView modelAndView = new ModelAndView();
-        Person profilePerson = personService.getPerson(userService.getUser(profile_id));
-        modelAndView.addObject("friends",personService.getFriends(profilePerson));
+        Person currentPerson = personService.getPerson(userService.getUser(profile_id));
+        modelAndView.addObject("friends",personService.getFriends(currentPerson));
+        modelAndView.addObject("currentPerson", currentPerson);
+        modelAndView.addObject("profilePerson", personService.getPerson(userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName())));
         modelAndView.setViewName("app.friends");
         return modelAndView;
     }

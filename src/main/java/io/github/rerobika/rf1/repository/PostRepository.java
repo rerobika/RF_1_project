@@ -13,4 +13,5 @@ public interface PostRepository extends CrudRepository<Post, Long> {
     Collection<Post> findByFromAndParentIsNull(User user);
     Collection<Post> findByToAndParentIsNullOrderByDateDesc (User user);
     Collection<Post> findAllByParentIsNull();
+    Collection<Post> findByFromAndParentIsNullOrderByDateDesc(User user);
 }

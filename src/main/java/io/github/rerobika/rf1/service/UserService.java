@@ -62,4 +62,6 @@ public interface UserService extends UserDetailsService {
     User getUser(String verificationToken);
 
     User getUserByEmail(final String email);
+
+    void encodePassword (User user);
 }

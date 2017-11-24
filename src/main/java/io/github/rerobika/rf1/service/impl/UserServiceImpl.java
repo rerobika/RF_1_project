@@ -66,7 +66,7 @@ class UserServiceImpl implements UserService {
             throw new EmailExistsException("There is an account with that email address " + user.getEmail());
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPlainPassword()));
+        encodePassword(user);
         user.setRole("ROLE_USER");
         user.setEnabled(false);
         userRepository.save(user);
@@ -139,6 +139,11 @@ class UserServiceImpl implements UserService {
     @Override
     public User getUserByEmail(final String email){
        return  userRepository.findByEmail(email);
+    }
+
+    @Override
+    public void encodePassword(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPlainPassword()));
     }
 
 }

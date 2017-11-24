@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface HobbyRepository extends CrudRepository<Hobby, Long> {
+    Hobby findByName (String name);
 }

@@ -24,15 +24,14 @@
                     </div>
                     <div class="panel-body">
                         <ul>
-                            <li><a href="profile.html" class="thumbnail"><img src="img/user.png" alt="frined's profile picture"></a></li> <!-- TODO: FIX img src-->
-                            <li><a href="profile.html" class="thumbnail"><img src="img/user.png" alt="frined's profile picture"></a></li> <!-- TODO: FIX img src-->
-                            <li><a href="profile.html" class="thumbnail"><img src="img/user.png" alt="frined's profile picture"></a></li> <!-- TODO: FIX img src-->
-                            <li><a href="profile.html" class="thumbnail"><img src="img/user.png" alt="frined's profile picture"></a></li> <!-- TODO: FIX img src-->
-                            <li><a href="profile.html" class="thumbnail"><img src="img/user.png" alt="frined's profile picture"></a></li> <!-- TODO: FIX img src-->
-                            <li><a href="profile.html" class="thumbnail"><img src="img/user.png" alt="frined's profile picture"></a></li> <!-- TODO: FIX img src-->
+                            <c:if test="${not empty friends}">
+                                <c:forEach items="${friends}" var="friend" varStatus="status">
+                                    <li><a href="/profile/${friend.id}" class="thumbnail"><img src="${friend.profilePicID.location}" alt="friend_profile_picture"></a></li>
+                                </c:forEach>
+                            </c:if>
                         </ul>
                         <div class="clearfix"></div>
-                        <a class="btn btn-primary" href="#">View All Friends</a>
+                        <a class="btn btn-primary" href="friends/${profilePerson.user.id}">View All Friends</a>
                     </div>
                 </div>
                 <div class="panel panel-default groups">

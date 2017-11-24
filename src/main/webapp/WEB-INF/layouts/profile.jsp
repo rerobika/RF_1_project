@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 <section>
@@ -41,10 +42,11 @@
                         <div class="col-md-8">
                             <ul>
                                 <li><strong>Email:</strong> ${profilePerson.user.email}</li>
-                                <li><strong>City:</strong> ${profilePerson.location}</li>
-                                <li><strong>State:</strong> ${profilePerson.location}</li>
-                                <li><strong>Gender:</strong> ${profilePerson.location}</li>
-                                <li><strong>DOB:</strong> ${profilePerson.location}</li>
+                                <li><strong>Location:</strong> ${profilePerson.location.name}</li>
+                                <li><strong>Job:</strong> ${profilePerson.job.name}</li>
+                                <li><strong>School:</strong> ${profilePerson.school.name}</li>
+                                <li><strong>Hobby:</strong> ${profilePerson.hobby.name}</li>
+                                <li><strong>DOB:</strong> ${fn:substring(profilePerson.birth, 0, 10)}</li>
                             </ul>
                         </div>
                     </div><br><br>

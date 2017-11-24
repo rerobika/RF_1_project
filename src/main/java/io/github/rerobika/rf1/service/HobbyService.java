@@ -9,4 +9,5 @@ public interface HobbyService {
     public void addHobby(Hobby hobby);
     public void removeHobby(Hobby hobby);
     public  Hobby getHobby(long id);
+    public Hobby getHobbyByName(String name);
 }

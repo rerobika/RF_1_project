@@ -8,6 +8,7 @@ public interface SchoolService {
     public List<School> getAll();
     public void addSchool(School school);
     public void removeSchool(School school);
-    public  School getSchool(long id);
+    public School getSchool(long id);
+    public School getSchoolByName(String name);
 
 }
