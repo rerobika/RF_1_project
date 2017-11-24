@@ -6,6 +6,41 @@
 
 <c:url var="loginUrl" value="/login" />
 
+<script>
+    function validateReg() {
+        var name = document.forms["formReg"]["user.name"].value;
+        if (name == "") {
+            swal("Error!","Full name cant be empty.","error");
+            return false;
+        }
+        else if(name.length<5 && name.length>20){
+            swal("Error!","Full name must be between 5 and 20 characters.","error");
+            return false;
+        }
+        var email=document.forms["formReg"]["user.email"].value;
+        var re = /\S+@\S+\.\S+/;
+        if(email==""){
+            swal("Error!","Email cant be empty.","error");
+            return false;
+        }
+        if(!re.test(email)){
+            swal("Error!","Invalid email format.","error");
+            return false;
+        }
+        var pass=document.forms["formReg"]["user.plainPassword"].value;
+        var rePass=document.forms["formReg"]["user.repeatPassword"].value;
+        if(pass==""){
+            swal("Error!","Password cant be empty.","error");
+            return false;
+        }
+        if(pass!==rePass){
+            swal("Error!","The passwords don't match.","error");
+            return false;
+        }
+        return true;
+    }
+</script>
+
 <div class="row">
 
     <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
@@ -22,7 +57,7 @@
 
 
             <div class="panel-body">
-                <form:form method="post" modelAttribute="person" class="form-horizontal">
+                <form:form name="formReg" onsubmit="return validateReg()" method="post" modelAttribute="person" class="form-horizontal">
 
                     <div class="form-group">
                         <div class="col-lg-8">

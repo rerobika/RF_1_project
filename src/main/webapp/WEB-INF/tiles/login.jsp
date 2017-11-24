@@ -6,6 +6,21 @@
 
 <c:url var="loginUrl" value="/login" />
 
+<script>
+    function validateLog() {
+        var name = document.forms["formLog"]["username"].value;
+        var pass = document.forms["formLog"]["password"].value;
+        if(name==""){
+            swal("Error!","Username is empty.","error");
+            return false;
+        }else if(pass==""){
+            swal("Error!","Password is empty.","error");
+            return false;
+        }
+        return true;
+    }
+</script>
+
 <div class="row">
 
     <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
@@ -22,7 +37,7 @@
 
 
             <div class="panel-body">
-                <form method="post" action="${loginUrl}" class="form-horizontal">
+                <form name="formLog" onsubmit="return validateLog()" method="post" action="${loginUrl}" class="form-horizontal">
 
                     <input type="hidden" name="${_csrf.parameterName}"
                            value="${_csrf.token}" />
