@@ -70,4 +70,23 @@
         <put-attribute name="content" value="/WEB-INF/tiles/verifymail.jsp" />
     </definition>
 
+    <definition name="app.club" extends="app.default">
+        <put-attribute name="content" value="app.club.posting" />
+    </definition>
+
+    <definition name="app.club.posting" template="/WEB-INF/layouts/club.jsp">
+        <put-attribute name="clubPosting" value="/WEB-INF/tiles/clubPosting.jsp"/>
+    </definition>
+
+    <definition name="app.clubPosting" extends="app.default">
+        <put-attribute name="content" value="/WEB-INF/tiles/clubPosting.jsp" />
+    </definition>
+
+    <definition name="app.createclub" extends="app.default">
+        <put-attribute name="content" value="/WEB-INF/tiles/createClub.jsp" />
+    </definition>
+
+
+
+
 </tiles-definitions>

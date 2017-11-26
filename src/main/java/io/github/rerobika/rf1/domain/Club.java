@@ -13,7 +13,7 @@ public class Club{
 
     @ManyToOne
     private Person owner;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     private User user;
     @OneToMany
     List<Person> members;
@@ -24,6 +24,7 @@ public class Club{
         this.user = user;
         this.members = members;
     }
+    public Club(){};
 
     public long getId() {
         return Id;

@@ -24,6 +24,7 @@ public class Membership {
         this.date = date;
         this.state = state;
     }
+    public Membership(){};
 
     public long getId() {
         return id;
