@@ -13,7 +13,7 @@
             swal("Error!","Full name cant be empty.","error");
             return false;
         }
-        else if(name.length<5 && name.length>20){
+        else if(name.length<5 || name.length>20){
             swal("Error!","Full name must be between 5 and 20 characters.","error");
             return false;
         }
@@ -28,8 +28,9 @@
             return false;
         }
         var pass=document.forms["formReg"]["user.plainPassword"].value;
+        console.log(pass);
         var rePass=document.forms["formReg"]["user.repeatPassword"].value;
-        if(pass.length < 5 && pass.length > 20){
+        if(pass.length < 5 || pass.length > 20){
             swal("Error!","Password must be between 5 and 20 characters.","error");
             return false;
         }
@@ -87,8 +88,8 @@
 
                     <div class="form-group">
                         <div class="col-lg-8">
-                            <input type="password"
-                                    placeholder="Repeat password" class="form-control" />
+                            <form:input type="password"
+                                    placeholder="Repeat password" path="user.repeatPassword" class="form-control" />
                         </div>
                     </div>
 
