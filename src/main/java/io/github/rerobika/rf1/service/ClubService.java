@@ -1,8 +1,10 @@
 package io.github.rerobika.rf1.service;
 
 import io.github.rerobika.rf1.domain.Club;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 
 public interface ClubService {
     public List<Club> getAll();

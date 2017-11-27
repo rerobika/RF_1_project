@@ -117,7 +117,6 @@ public class ProfileDataController {
         modelAndView.addObject("relation_status",pending);
         return modelAndView;
     }
-
     @PostMapping(value = "/profile/{profile_id}",params = "sendmypost")
     ModelAndView sendMyPost(@PathVariable long profile_id, ModelAndView modelAndView, @ModelAttribute(value="postInfo") @Valid Post postInfo,
                             @RequestParam(value = "file", required = false) MultipartFile file, BindingResult result)
