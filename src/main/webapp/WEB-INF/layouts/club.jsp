@@ -16,21 +16,22 @@
                     <div class="row">
                         <div class="col-md-8">
                             <ul>
-                                <li><strong>Owner:</strong> ${club.user.name}</li>
+                                <li><strong>Owner:</strong> ${club.owner.user.name}</li>
                                 <li><strong>Description:</strong> ${club.description}</li>
                             </ul>
                         </div>
+                        <c:if test="${profilePersonIsMember != true}">
+                            <div>
+                                <form:form method="post">
+                                    <button type="submit" class="btn btn-primary button_pull_right" name="join">Join</button>
+                                </form:form>
+                            </div>
+                        </c:if>
                     </div><br><br>
                     <tiles:insertAttribute name="clubPosting" />
                 </div>
             </div>
-            <c:if test="${profilePersonIsMember != true}">
-                <div>
-                    <form:form method="post">
-                        <button type="submit" class="btn btn-primary button_pull_right" name="join">Join</button>
-                    </form:form>
-                </div>
-            </c:if>
+
 
             <div class="col-md-4">
                 <div class="panel panel-default friends">
@@ -46,7 +47,6 @@
                             </c:if>
                         </ul>
                         <div class="clearfix"></div>
-                        <a class="btn btn-primary" href="/club/${club.id}/members">View All Member</a>
                     </div>
                 </div>
             </div>

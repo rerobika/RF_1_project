@@ -77,6 +77,7 @@
                     <li><a href="${contextRoot}/home">Home</a></li>
                     <li><a href="${contextRoot}/profile">Profile</a></li>
                     <li><a href="${contextRoot}/members">Members</a></li>
+                    <li><a href="${contextRoot}/clubs">Clubs</a> </li>
                 </sec:authorize>
 
             </ul>

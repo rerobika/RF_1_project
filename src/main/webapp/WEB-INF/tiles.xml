@@ -86,6 +86,10 @@
         <put-attribute name="content" value="/WEB-INF/tiles/createClub.jsp" />
     </definition>
 
+    <definition name="app.clubs" extends="app.default">
+        <put-attribute name="content" value="/WEB-INF/tiles/clubs.jsp" />
+    </definition>
+
 
 
 

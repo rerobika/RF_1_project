@@ -5,18 +5,11 @@ import io.github.rerobika.rf1.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.jws.WebParam;
 import javax.validation.Valid;
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Random;
+import java.lang.reflect.Member;
+import java.util.*;
 
 
 @Controller
@@ -88,8 +81,14 @@ public class ClubController {
         Person person = personService.getPerson(userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
         club.setOwner(person);
         Random rand = new Random();
-        club.getUser().setEmail(club.getUser().getName()+rand.nextInt(10000)+"@"+"hack.com");
+        club.getUser().setEmail(rand.nextInt(10000)+"@"+rand.nextInt(100)+"hack.com");
         clubService.addClub(club);
+        Membership membership = new Membership();
+        membership.setWho(person);
+        membership.setIn(club);
+        membership.setState(MembershipState.member);
+        membership.setDate(new Date());
+        membershipService.addMembership(membership);
         modelAndView.setViewName("redirect:/club/"+club.getId());
         return modelAndView;
     }
@@ -99,6 +98,38 @@ public class ClubController {
         postInfo.setDate(new Date());
         postService.addPost(postInfo);
         modelAndView.setViewName("redirect:/club/"+club_id);
+        return modelAndView;
+    }
+    @GetMapping("/clubs")
+    ModelAndView listClubs()
+    {
+        ModelAndView modelAndView = new ModelAndView();
+        List<Club> clubs = clubService.getAll();
+        modelAndView.addObject("clubs",clubs);
+        Map<Long,Boolean> isMemberOfClubs = new TreeMap<>();
+        int i = 0;
+        for(Club club : clubs)
+        {
+            isMemberOfClubs.put(club.getId(),membershipService.isMemberOfClub(club,currentPerson));
+            i++;
+        }
+        modelAndView.addObject("profilePersonIsMember",isMemberOfClubs);
+        modelAndView.addObject("profilePerson",currentPerson);
+        modelAndView.setViewName("app.clubs");
+        return modelAndView;
+    }
+    @PostMapping(value = "/clubs",params = "join")
+    ModelAndView joinClub(ModelAndView modelAndView,@RequestParam("club_id") long club_id)
+    {
+        currentPerson = personService.getPerson(userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
+        Club club = clubService.getClub(club_id);
+        Membership membership = new Membership();
+        membership.setDate(new Date());
+        membership.setIn(club);
+        membership.setState(MembershipState.member);
+        membership.setWho(currentPerson);
+        membershipService.addMembership(membership);
+        modelAndView.setViewName("redirect:/clubs");
         return modelAndView;
     }
 }
