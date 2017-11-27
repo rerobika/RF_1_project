@@ -49,6 +49,8 @@ public class ProfileDataController {
     JobService jobService;
     @Autowired
     LocationService locationService;
+    @Autowired
+    NotificationService notificationService;
 
     private boolean passwordUpdateFail = false;
 
@@ -115,12 +117,15 @@ public class ProfileDataController {
         modelAndView.addObject("friends",personService.getFriends(profilePerson));
         modelAndView.addObject("relation",relation);
         modelAndView.addObject("relation_status",pending);
+        modelAndView.addObject("notification", notificationService.getAllByPerson(currentPerson));
         return modelAndView;
     }
     @PostMapping(value = "/profile/{profile_id}",params = "sendmypost")
     ModelAndView sendMyPost(@PathVariable long profile_id, ModelAndView modelAndView, @ModelAttribute(value="postInfo") @Valid Post postInfo,
                             @RequestParam(value = "file", required = false) MultipartFile file, BindingResult result)
     {
+        Person currentPerson = personService.getPerson(userService.getUser(profile_id));
+        Person profilePerson = personService.getPerson(userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
         if(!result.hasErrors())
         {
             postInfo.setDate(new Date());
@@ -143,6 +148,9 @@ public class ProfileDataController {
                 upload_file(file,UPLOADED_FOLDER + File.separator + fileName);
 
                 postService.addPost(postInfo);
+            }
+            if( currentPerson != profilePerson){
+                notificationService.addNotification(new Notification("/profile/" + profilePerson.getUser().getId() + "|" + profilePerson.getUser().getName() + " posted on your wall! ", new Date(), currentPerson));
             }
 
         }
@@ -170,6 +178,10 @@ public class ProfileDataController {
         }
 
         relationService.addRelation(new Relation(currentPerson, profilePerson, new Date(), RelationState.marked ));
+
+        if( currentPerson != profilePerson){
+            notificationService.addNotification(new Notification("/profile/" + currentPerson.getUser().getId() + "|" + currentPerson.getUser().getName() + " marked you as friend! ", new Date(), profilePerson));
+        }
         modelAndView.setViewName("redirect:/profile/"+profile_id);
         return modelAndView;
     }
@@ -196,6 +208,9 @@ public class ProfileDataController {
         relation.setState(RelationState.friend);
         relationService.addRelation(relation);
         modelAndView.setViewName("redirect:/profile/"+profile_id);
+        if( currentPerson != profilePerson){
+            notificationService.addNotification(new Notification("/profile/" + currentPerson.getUser().getId() + "|" + currentPerson.getUser().getName() + " confirmed your friend request! ", new Date(), profilePerson));
+        }
         return modelAndView;
     }
 
@@ -215,6 +230,7 @@ public class ProfileDataController {
         modelAndView.setViewName("app.edit");
         modelAndView.addObject("profilePerson", profilePerson);
         modelAndView.addObject("passwordUpdateFail", passwordUpdateFail);
+        modelAndView.addObject("notification", notificationService.getAllByPerson(personService.getPerson(userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()))));
         passwordUpdateFail = false;
         return modelAndView;
     }
