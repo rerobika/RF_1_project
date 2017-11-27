@@ -47,6 +47,7 @@
                                 <li><strong>School:</strong> ${profilePerson.school.name}</li>
                                 <li><strong>Hobby:</strong> ${profilePerson.hobby.name}</li>
                                 <li><strong>DOB:</strong> ${fn:substring(profilePerson.birth, 0, 10)}</li>
+                                <li><strong>Invited by:</strong> <a href="/profile/${profilePerson.refID.id}"> ${profilePerson.refID.name} </a></li>
                             </ul>
                         </div>
                     </div><br><br>

@@ -1,15 +1,9 @@
 package io.github.rerobika.rf1.controller;
 
-import io.github.rerobika.rf1.domain.Album;
-import io.github.rerobika.rf1.domain.Person;
-import io.github.rerobika.rf1.domain.Picture;
-import io.github.rerobika.rf1.domain.User;
+import io.github.rerobika.rf1.domain.*;
 import io.github.rerobika.rf1.event.OnRegistrationCompleteEvent;
 import io.github.rerobika.rf1.exception.EmailExistsException;
-import io.github.rerobika.rf1.service.AlbumService;
-import io.github.rerobika.rf1.service.PersonService;
-import io.github.rerobika.rf1.service.PictureService;
-import io.github.rerobika.rf1.service.UserService;
+import io.github.rerobika.rf1.service.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -45,15 +39,19 @@ public class AuthController {
 
     private final AlbumService albumService;
 
+    private final VerificationTokenService verificationTokenService;
+
     private long default_profile_picture_id;
 
     @Autowired
-    public AuthController(UserService userService, ApplicationEventPublisher eventPublisher, PersonService personService, PictureService pictureService, AlbumService albumService) {
+    public AuthController(UserService userService, ApplicationEventPublisher eventPublisher, PersonService personService, PictureService pictureService,
+                          AlbumService albumService, VerificationTokenService verificationTokenService) {
         this.userService = userService;
         this.eventPublisher = eventPublisher;
         this.personService = personService;
         this.pictureService = pictureService;
         this.albumService = albumService;
+        this.verificationTokenService = verificationTokenService;
         this.default_profile_picture_id = -1;
     }
 
@@ -94,6 +92,7 @@ public class AuthController {
     @PostMapping(value="/register")
     ModelAndView register(ModelAndView modelAndView,
                           @ModelAttribute(value="person") @Valid Person person,
+                          @RequestParam(value = "token", required = false) String token,
                           BindingResult result,
                           WebRequest request) {
         String view = "app.register";
@@ -118,6 +117,11 @@ public class AuthController {
                 albumService.addAlbum(post_picture_album);
 
                 person.setProfilePicID(pictureService.getPicture(default_profile_picture_id));
+
+                VerificationToken real_token = verificationTokenService.getTokenByName(token);
+                if (real_token != null){
+                    person.setRefID(real_token.getUser());
+                }
 
                 personService.addPerson(person);
             } catch (EmailExistsException e) {

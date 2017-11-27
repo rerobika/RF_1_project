@@ -95,7 +95,7 @@
 
                     <div class="form-group">
                         <div class="col-lg-8">
-                            <form:input type="text" path="refID" placeholder="Reference code"
+                            <input type="text" name="token" placeholder="Reference code"
                                     class="form-control" />
 
                         </div>
