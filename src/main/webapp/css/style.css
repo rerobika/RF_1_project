@@ -194,3 +194,62 @@ footer{
 	width: 150px;
 	height: 150px;
 }
+
+.nav2 {
+	display: block;
+	font: 13px Helvetica, Tahoma, serif;
+	text-transform: uppercase;
+	margin: 0;
+	padding: 0;
+}
+
+.nav2 li {
+	display: inline-block;
+	list-style: none;
+}
+
+.nav2 .button-dropdown {
+	position: relative;
+}
+
+.nav2 li a {
+	display: block;
+	color: #333;
+	background-color: #fff;
+	padding: 10px 20px;
+	text-decoration: none;
+}
+
+.nav2 li a span {
+	display: inline-block;
+	margin-left: 5px;
+	font-size: 10px;
+	color: #999;
+}
+
+.nav2 li a:hover, .nav2 li a.dropdown-toggle.active {
+	background-color: #289dcc;
+	color: #fff;
+}
+
+.nav2 li a:hover span, .nav2 li a.dropdown-toggle.active span {
+	color: #fff;
+}
+
+.nav2 li .dropdown-menu {
+	display: none;
+	position: absolute;
+	left: 0;
+	padding: 0;
+	margin: 0;
+	margin-top: 3px;
+	text-align: left;
+}
+
+.nav2 li .dropdown-menu.active {
+	display: block;
+}
+
+.nav2 li .dropdown-menu a {
+	width: 150px;
+}

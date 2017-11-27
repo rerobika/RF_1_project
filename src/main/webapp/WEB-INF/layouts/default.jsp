@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
            prefix="sec"%>
 
@@ -33,6 +36,7 @@
     <script src="${contextRoot}/js/ekko-lightbox.js"></script>
     <script src="${contextRoot}/js/image-upload.js"></script>
     <script src="${contextRoot}/js/datepicker.js"></script>
+    <script src="${contextRoot}/js/dropdown.js"></script>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -89,24 +93,42 @@
                 </sec:authorize>
 
                 <sec:authorize access="isAuthenticated()">
-                    <li><a href="javascript:$('#logoutForm').submit();">Logout</a></li>
-                </sec:authorize>
+                    <li class="button-dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle">
+                            <i class="fa fa-bell" aria-hidden="true"></i>Notifications
+                        </a>
+                        <ul id = "list_header" class="dropdown-menu">
+                        </ul>
+                     </li>
+                     <li><a href="javascript:$('#logoutForm').submit();">Logout</a></li>
+                 </sec:authorize>
 
-            </ul>
-        </div>
-        <!--/.nav-collapse -->
-    </div>
+ </ul>
+</div>
+<!--/.nav-collapse -->
+</div>
 </nav>
 
 <c:url var="logoutLink" value="/logout" />
 <form id="logoutForm" method="post" action="${logoutLink}">
-    <input type="hidden" name="${_csrf.parameterName}"
-           value="${_csrf.token}" />
+<input type="hidden" name="${_csrf.parameterName}"
+value="${_csrf.token}" />
 </form>
 
 <div class="container">
-    <tiles:insertAttribute name="content" />
+<tiles:insertAttribute name="content" />
 </div>
 
+<script>
+    $.get( "/notifications", function(data) {
+        var container = $("#list_header");
+        data.forEach(function (item) {
+            var asd = item.text;
+            var qwe = asd.split("|");
+            container.prepend("<li><a href ='" + qwe[0] + "'> " + qwe[1] + "</a></li>")
+        })
+        console.log(data);
+    });
+</script>
 </body>
 </html>

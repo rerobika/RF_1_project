@@ -19,6 +19,7 @@ public class Notification {
         this.person = person;
     }
 
+    public Notification (){};
     public long getId() {
         return id;
     }

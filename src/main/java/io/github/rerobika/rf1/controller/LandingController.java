@@ -36,6 +36,8 @@ public class LandingController implements ErrorController {
     PictureService pictureService;
     @Autowired
     AlbumService albumService;
+    @Autowired
+    NotificationService notificationService;
 
     private static final String ERROR_PATH = "/error";
 
@@ -72,6 +74,7 @@ public class LandingController implements ErrorController {
         modelAndView.addObject("comments",comments);
         modelAndView.addObject("commented_from",commented_from);
         modelAndView.addObject("friends",personService.getFriends(profilePerson));
+        modelAndView.addObject("notification", notificationService.getAllByPerson(profilePerson));
         modelAndView.setViewName("app.home");
         return modelAndView;
     }
