@@ -13,22 +13,24 @@
                 }
             }
         });
-        jQuery.ajax({
-            url: "/message/" + targetId,
-            type: "POST",
-            data: inputField.val(),
-            contentType:"application/json; charset=utf-8",
-            dataType:"json",
-            success: function() {
-                inputField.val('');
-                sendButton.removeAttr("disabled");
-                loadConversationForUser(targetId);
+        if (inputField.val().length>0) {
+            jQuery.ajax({
+                url: "/message/" + targetId,
+                type: "POST",
+                data: inputField.val(),
+                contentType:"application/json; charset=utf-8",
+                dataType:"json",
+                success: function() {
+                    inputField.val('');
+                    sendButton.removeAttr("disabled");
+                    loadConversationForUser(targetId);
                 },
-            error: function() {
-                sendButton.removeAttr("disabled");
-                console.log("Messaging error!");
-            }
-        });
+                error: function() {
+                    sendButton.removeAttr("disabled");
+                    console.log("Messaging error!");
+                }
+            });
+        }
     });
 
 

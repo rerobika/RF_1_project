@@ -6,13 +6,13 @@ import io.github.rerobika.rf1.domain.Picture;
 import io.github.rerobika.rf1.domain.Post;
 import io.github.rerobika.rf1.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.thymeleaf.util.DateUtils;
 
 import javax.validation.Valid;
 import java.io.*;
@@ -27,7 +27,7 @@ import java.util.List;
  * Created by Nandor Magyar on 9/30/17.
  */
 @Controller
-public class LandingController {
+public class LandingController implements ErrorController {
 
     @Autowired
     UserService userService;
@@ -148,8 +148,8 @@ public class LandingController {
     @RequestMapping("/about")
     String about() { return "app.about";    }
 
-    ///@RequestMapping("/error")
-    //String error() { return "app.error"; }
+    @RequestMapping("/error")
+    String error() { return "app.error"; }
 
     @RequestMapping("/profile")
     String profile() {
