@@ -12,10 +12,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.util.DateUtils;
 
 import javax.validation.Valid;
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -77,7 +80,10 @@ public class LandingController {
             {
                 if(person.getBirth()!=null)
                 {
-                    if(person.getBirth().compareTo(today)==0)
+                    LocalDate localDate1 = person.getBirth().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    LocalDate localDate2 = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    boolean asd =localDate1.equals(localDate2);
+                    if(localDate1.equals(localDate2))
                     {
                         friendsWhoHaveBirthday.add(person);
                     }
