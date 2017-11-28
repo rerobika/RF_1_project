@@ -37,8 +37,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-sm-2">
-                                <a href="/profile/${posted.from.id}" class="post-avatar thumbnail"><img src="${posted_from[status.index].profilePicID.location}" alt="Profile picture"><div class="text-center">${posted.from.name}</div></a> <!-- TODO: FIX img src-->
-                                <div class="likes text-center">${posted.likeNumber}</div> <!-- TODO: FIX like number-->
+                                <a href="/profile/${posted.from.id}" class="post-avatar thumbnail"><img src="${posted_from[status.index].profilePicID.location}" alt="Profile picture"><div class="text-center">${posted.from.name}</div></a>
                             </div>
                             <div class="col-sm-10">
                                 <div class="bubble">
@@ -67,14 +66,12 @@
                                     </div>
                                     <div class="pointer-border"></div>
                                 </div>
-                                <p class="post-actions"><a href="#">Like</a>
                                 <div class="comment-form">
                                     <form:form method="post" modelAttribute="postInfo" class="form-inline" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <form:hidden path="from"  value="${currentPerson.user.id}" class="post-control"/>
                                             <form:hidden path="to"  value="${posted.from.id}" class="post-control"/>
                                             <form:hidden path="parent" value="${posted.id}" class="post-control"/>
-                                            <form:hidden path="likeNumber" value="0" class="post-control"/>
                                         </div>
 
 
