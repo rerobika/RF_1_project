@@ -51,6 +51,8 @@ public class ProfileDataController {
     LocationService locationService;
     @Autowired
     NotificationService notificationService;
+    @Autowired
+    ClubService clubService;
 
     private boolean passwordUpdateFail = false;
 
@@ -107,6 +109,10 @@ public class ProfileDataController {
 
 
         Post post = new Post();
+        List<Club> smallClubList =clubService.getClubByPerson(profilePerson);
+
+
+        modelAndView.addObject("smallClubList",smallClubList);
         modelAndView.addObject("currentPerson", currentPerson);
         modelAndView.addObject("profilePerson", profilePerson);
         modelAndView.addObject("postInfo", post);

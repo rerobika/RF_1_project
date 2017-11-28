@@ -1,14 +1,8 @@
 package io.github.rerobika.rf1.controller;
 
 
-import io.github.rerobika.rf1.domain.Notification;
-import io.github.rerobika.rf1.domain.Person;
-import io.github.rerobika.rf1.domain.Relation;
-import io.github.rerobika.rf1.domain.RelationState;
-import io.github.rerobika.rf1.service.NotificationService;
-import io.github.rerobika.rf1.service.PersonService;
-import io.github.rerobika.rf1.service.RelationService;
-import io.github.rerobika.rf1.service.UserService;
+import io.github.rerobika.rf1.domain.*;
+import io.github.rerobika.rf1.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Controller
@@ -28,12 +23,14 @@ public class FriendsController {
     private final RelationService relationService;
     private final UserService userService;
     private final NotificationService notificationService;
+    private final ClubService clubService;
     private boolean success_mark;
     private boolean success_confirm;
 
     @Autowired
-    public FriendsController(PersonService personService,RelationService relationService,UserService userService, NotificationService notificationService)
+    public FriendsController(PersonService personService,RelationService relationService,UserService userService, NotificationService notificationService,ClubService clubService)
     {
+        this.clubService = clubService;
         this.relationService = relationService;
         this.personService = personService;
         this.userService = userService;
@@ -59,7 +56,10 @@ public class FriendsController {
     {
         Person profilePerson = personService.getPerson(userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
         ModelAndView modelAndView = new ModelAndView();
+        List<Club> smallClubList =clubService.getClubByPerson(profilePerson);
 
+
+        modelAndView.addObject("smallClubList",smallClubList);
         modelAndView.addObject("non_friends",personService.getNonFriends(profilePerson));
         modelAndView.addObject("pending_friends",personService.getPendingToFriends(profilePerson));
         modelAndView.addObject("real_friends",personService.getFriends(profilePerson));

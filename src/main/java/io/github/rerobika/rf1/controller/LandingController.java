@@ -1,5 +1,6 @@
 package io.github.rerobika.rf1.controller;
 
+import io.github.rerobika.rf1.domain.Club;
 import io.github.rerobika.rf1.domain.Person;
 import io.github.rerobika.rf1.domain.Picture;
 import io.github.rerobika.rf1.domain.Post;
@@ -39,6 +40,8 @@ public class LandingController {
     AlbumService albumService;
     @Autowired
     NotificationService notificationService;
+    @Autowired
+    ClubService clubService;
 
     private static final String ERROR_PATH = "/error";
 
@@ -65,8 +68,29 @@ public class LandingController {
         for (Post c : comments) {
             commented_from.add(personService.getPerson(c.getFrom()));
         }
-
+        List<Person> friends = personService.getFriends(profilePerson);
+        if(friends != null)
+        {
+            List<Person> friendsWhoHaveBirthday = new LinkedList<Person>();
+            Date today = new Date();
+            for(Person person : friends)
+            {
+                if(person.getBirth()!=null)
+                {
+                    if(person.getBirth().compareTo(today)==0)
+                    {
+                        friendsWhoHaveBirthday.add(person);
+                    }
+                }
+            }
+            modelAndView.addObject("friendsWhoseHaveBirthday",friendsWhoHaveBirthday);
+        }
         Post post = new Post();
+
+        List<Club> smallClubList =clubService.getClubByPerson(profilePerson);
+
+
+        modelAndView.addObject("smallClubList",smallClubList);
         modelAndView.addObject("currentPerson", profilePerson);
         modelAndView.addObject("profilePerson", profilePerson);
         modelAndView.addObject("postInfo", post);
@@ -74,8 +98,9 @@ public class LandingController {
         modelAndView.addObject("posted_from", posted_from);
         modelAndView.addObject("comments",comments);
         modelAndView.addObject("commented_from",commented_from);
-        modelAndView.addObject("friends",personService.getFriends(profilePerson));
+        modelAndView.addObject("friends",friends);
         modelAndView.addObject("notification", notificationService.getAllByPerson(profilePerson));
+
         modelAndView.setViewName("app.home");
         return modelAndView;
     }
