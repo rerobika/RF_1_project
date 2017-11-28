@@ -1,6 +1,7 @@
 package io.github.rerobika.rf1.service.impl;
 
 import io.github.rerobika.rf1.domain.Club;
+import io.github.rerobika.rf1.domain.Person;
 import io.github.rerobika.rf1.domain.User;
 import io.github.rerobika.rf1.repository.ClubRepository;
 import io.github.rerobika.rf1.repository.UserRepository;
@@ -36,5 +37,11 @@ public class ClubServiceImpl implements ClubService {
     @Override
     public Club getClub(long id){
         return  clubRepository.findOne(id);
+    }
+
+
+    @Override
+    public List<Club> getClubByPerson(Person person) {
+        return (List<Club>)clubRepository.findByOwner(person);
     }
 }

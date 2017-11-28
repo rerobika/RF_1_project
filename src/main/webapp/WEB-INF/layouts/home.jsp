@@ -18,6 +18,21 @@
                 </div>
             </div>
             <div class="col-md-4">
+                <c:if test="${not empty friendsWhoseHaveBirthday}">
+                <div class="panel panel-default friends">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Friends who have birthday</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                                <c:forEach items="${friendsWhoseHaveBirthday}" var="friend" varStatus="status">
+                                    <li><a href="/profile/${friend.user.id}" class="thumbnail"><img src="${friend.profilePicID.location}" alt="friend_profile_picture"></a></li>
+                                </c:forEach>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                </c:if>
                 <div class="panel panel-default friends">
                     <div class="panel-heading">
                         <h3 class="panel-title">My Friends</h3>
@@ -26,7 +41,7 @@
                         <ul>
                             <c:if test="${not empty friends}">
                                 <c:forEach items="${friends}" var="friend" varStatus="status">
-                                    <li><a href="/profile/${friend.id}" class="thumbnail"><img src="${friend.profilePicID.location}" alt="friend_profile_picture"></a></li>
+                                    <li><a href="/profile/${friend.user.id}" class="thumbnail"><img src="${friend.profilePicID.location}" alt="friend_profile_picture"></a></li>
                                 </c:forEach>
                             </c:if>
                         </ul>
@@ -36,28 +51,18 @@
                 </div>
                 <div class="panel panel-default groups">
                     <div class="panel-heading">
-                        <h3 class="panel-title">My Groups</h3>
+                        <h3 class="panel-title">My Clubs</h3>
                     </div>
                     <div class="panel-body">
                         <div class="group-item">
-                            <img src="img/group.png" alt="">
-                            <h4><a href="#" class="">Sample Group One</a></h4>
-                            <p>This is a paragraph of intro text, or whatever I want to call it.</p>
+                            <c:if test="${not empty smallClubList}">
+                                <c:forEach items="${smallClubList}" var="club" varStatus="status">
+                                    <h4><a href="club/${club.id}" class="thumbnail">${club.user.name}</a></h4>
+                                </c:forEach>
+                            </c:if>
                         </div>
                         <div class="clearfix"></div>
-                        <div class="group-item">
-                            <img src="img/group.png" alt="">
-                            <h4><a href="#" class="">Sample Group Two</a></h4>
-                            <p>This is a paragraph of intro text, or whatever I want to call it.</p>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="group-item">
-                            <img src="img/group.png" alt="">
-                            <h4><a href="#" class="">Sample Group Three</a></h4>
-                            <p>This is a paragraph of intro text, or whatever I want to call it.</p>
-                        </div>
-                        <div class="clearfix"></div>
-                        <a href="#" class="btn btn-primary">View All Groups</a>
+                        <a href="/clubs" class="btn btn-primary">View All Clubs</a>
                     </div>
                 </div>
             </div>

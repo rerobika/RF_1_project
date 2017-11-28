@@ -1,5 +1,6 @@
 package io.github.rerobika.rf1.controller;
 
+import io.github.rerobika.rf1.domain.Club;
 import io.github.rerobika.rf1.domain.Person;
 import io.github.rerobika.rf1.domain.Picture;
 import io.github.rerobika.rf1.domain.Post;
@@ -11,10 +12,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.util.DateUtils;
 
 import javax.validation.Valid;
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,6 +43,8 @@ public class LandingController {
     AlbumService albumService;
     @Autowired
     NotificationService notificationService;
+    @Autowired
+    ClubService clubService;
 
     private static final String ERROR_PATH = "/error";
 
@@ -65,8 +71,32 @@ public class LandingController {
         for (Post c : comments) {
             commented_from.add(personService.getPerson(c.getFrom()));
         }
-
+        List<Person> friends = personService.getFriends(profilePerson);
+        if(friends != null)
+        {
+            List<Person> friendsWhoHaveBirthday = new LinkedList<Person>();
+            Date today = new Date();
+            for(Person person : friends)
+            {
+                if(person.getBirth()!=null)
+                {
+                    LocalDate localDate1 = person.getBirth().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    LocalDate localDate2 = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    boolean asd =localDate1.equals(localDate2);
+                    if(localDate1.equals(localDate2))
+                    {
+                        friendsWhoHaveBirthday.add(person);
+                    }
+                }
+            }
+            modelAndView.addObject("friendsWhoseHaveBirthday",friendsWhoHaveBirthday);
+        }
         Post post = new Post();
+
+        List<Club> smallClubList =clubService.getClubByPerson(profilePerson);
+
+
+        modelAndView.addObject("smallClubList",smallClubList);
         modelAndView.addObject("currentPerson", profilePerson);
         modelAndView.addObject("profilePerson", profilePerson);
         modelAndView.addObject("postInfo", post);
@@ -74,8 +104,9 @@ public class LandingController {
         modelAndView.addObject("posted_from", posted_from);
         modelAndView.addObject("comments",comments);
         modelAndView.addObject("commented_from",commented_from);
-        modelAndView.addObject("friends",personService.getFriends(profilePerson));
+        modelAndView.addObject("friends",friends);
         modelAndView.addObject("notification", notificationService.getAllByPerson(profilePerson));
+
         modelAndView.setViewName("app.home");
         return modelAndView;
     }
