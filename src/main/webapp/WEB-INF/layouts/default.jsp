@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
            prefix="sec"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -57,63 +56,65 @@
 </head>
 <body>
 
-<!-- Static navbar -->
-<nav class="navbar navbar-default navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed"
-                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                    aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span> <span
-                    class="icon-bar"></span> <span class="icon-bar"></span> <span
-                    class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Yankee</a>
+    <!-- Static navbar -->
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed"
+                        data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                        aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span> <span
+                        class="icon-bar"></span> <span class="icon-bar"></span> <span
+                        class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Yankee</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+                    <sec:authorize access="!isAuthenticated()">
+                        <li><a href="${contextRoot}/about">About</a></li>
+                    </sec:authorize>
+
+                    <sec:authorize access="isAuthenticated()">
+                        <li><a href="${contextRoot}/home">Home</a></li>
+                        <li><a href="${contextRoot}/profile">Profile</a></li>
+                        <li><a href="${contextRoot}/message">Message</a></li>
+                        <li><a href="${contextRoot}/members">Members</a></li>
+                        <li><a href="${contextRoot}/clubs">Clubs</a> </li>
+                    </sec:authorize>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+
+                    <sec:authorize access="!isAuthenticated()">
+                        <li><a href="${contextRoot}/login">Login</a></li>
+                        <li><a href="${contextRoot}/register">Register</a></li>
+                    </sec:authorize>
+
+                    <sec:authorize access="isAuthenticated()">
+                        <c:url var="logoutLink" value="/logout" />
+                        <form id="logoutForm" method="post" action="${logoutLink}">
+                            <input type="hidden" name="${_csrf.parameterName}"
+                                   value="${_csrf.token}" />
+                        </form>
+                        <li class="button-dropdown">
+                            <a href="javascript:void(0)" class="dropdown-toggle">
+                                <i class="fa fa-bell" aria-hidden="true"></i>Notifications
+                            </a>
+                            <ul id = "list_header" class="dropdown-menu">
+                                <li>NO ... tification is available.</li>
+                            </ul>
+                        </li>
+                        <li><a href="javascript:$('#logoutForm').submit();">Logout</a></li>
+                    </sec:authorize>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
+    </nav>
 
-                <sec:authorize access="!isAuthenticated()">
-                    <li><a href="${contextRoot}/about">About</a></li>
-                </sec:authorize>
 
-                <sec:authorize access="isAuthenticated()">
-                    <li><a href="${contextRoot}/home">Home</a></li>
-                    <li><a href="${contextRoot}/profile">Profile</a></li>
-                    <li><a href="${contextRoot}/members">Members</a></li>
-                    <li><a href="${contextRoot}/clubs">Clubs</a> </li>
-                </sec:authorize>
-
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-
-                <sec:authorize access="!isAuthenticated()">
-                    <li><a href="${contextRoot}/login">Login</a></li>
-                    <li><a href="${contextRoot}/register">Register</a></li>
-                </sec:authorize>
-
-                <sec:authorize access="isAuthenticated()">
-                    <li class="button-dropdown">
-                        <a href="javascript:void(0)" class="dropdown-toggle">
-                            <i class="fa fa-bell" aria-hidden="true"></i>Notifications
-                        </a>
-                        <ul id = "list_header" class="dropdown-menu">
-                        </ul>
-                     </li>
-                     <li><a href="javascript:$('#logoutForm').submit();">Logout</a></li>
-                 </sec:authorize>
-
- </ul>
-</div>
-<!--/.nav-collapse -->
-</div>
-</nav>
-
-<c:url var="logoutLink" value="/logout" />
-<form id="logoutForm" method="post" action="${logoutLink}">
-<input type="hidden" name="${_csrf.parameterName}"
-value="${_csrf.token}" />
-</form>
 
 <div class="container">
 <tiles:insertAttribute name="content" />
@@ -122,12 +123,14 @@ value="${_csrf.token}" />
 <script>
     $.get( "/notifications", function(data) {
         var container = $("#list_header");
-        data.forEach(function (item) {
-            var asd = item.text;
-            var qwe = asd.split("|");
-            container.prepend("<li><a href ='" + qwe[0] + "'> " + qwe[1] + "</a></li>")
-        })
-        console.log(data);
+        if (data && data.length > 0) {
+            container.html("");
+            data.forEach(function (item) {
+                var asd = item.text;
+                var qwe = asd.split("|");
+                container.prepend("<li><a href ='" + qwe[0] + "'> " + qwe[1] + "</a></li>");
+            });
+        }
     });
 </script>
 </body>

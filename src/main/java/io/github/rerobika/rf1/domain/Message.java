@@ -1,6 +1,9 @@
 package io.github.rerobika.rf1.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Entity
@@ -9,11 +12,15 @@ public class Message {
     @Id
     private long id;
     private String text;
+
     @ManyToOne
     private User from;
+
     @ManyToOne
     private User to;
     private Date date;
+
+    public Message(){}
 
     public Message(String text, User from, User to, Date date) {
         this.text = text;

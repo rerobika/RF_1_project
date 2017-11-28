@@ -16,9 +16,17 @@
 
                     <c:if test="${currentPerson.user.id != profilePerson.user.id}">
                         <h1 class="page-header">${currentPerson.user.name}'s friends</h1>
-                    </c:if>
+                    </c:if><section>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="members">
+                                        <c:if test="${currentPerson.user.id == profilePerson.user.id}">
+                                            <h1 class="page-header">My friends</h1>
+                                        </c:if>
 
-                    <c:if test="${not empty friends}">
+
+                                        <c:if test="${not empty friends}">
                         <c:forEach items="${friends}" var="friend" varStatus="status">
                             <div class="row member-row">
                                 <div class="col-md-3">
@@ -29,7 +37,7 @@
                                 </div>
 
                                 <div class="col-md-3">
-                                    <p><a href="#" class="btn btn-default btn-block"><i class="fa fa-envelope"></i> Send Message</a></p>
+                                    <p><a href="${pageContext.request.contextPath}/message" class="btn btn-default btn-block"><i class="fa fa-envelope"></i> Send Message</a></p>
                                 </div>
                                 <div class="col-md-3">
                                     <p><a href="/profile/${friend.id}" class="btn btn-primary btn-block"><i class="fa fa-edit"></i> View Profile</a></p>
@@ -42,9 +50,3 @@
         </div>
     </div>
 </section>
-
-<footer>
-    <div class="container">
-        <p>RF I project, Social network, 2017</p>
-    </div>
-</footer>

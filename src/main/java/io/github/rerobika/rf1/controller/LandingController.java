@@ -1,9 +1,10 @@
 package io.github.rerobika.rf1.controller;
 
-import io.github.rerobika.rf1.domain.*;
+import io.github.rerobika.rf1.domain.Person;
+import io.github.rerobika.rf1.domain.Picture;
+import io.github.rerobika.rf1.domain.Post;
 import io.github.rerobika.rf1.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -22,7 +23,7 @@ import java.util.List;
  * Created by Nandor Magyar on 9/30/17.
  */
 @Controller
-public class LandingController implements ErrorController {
+public class LandingController {
 
     @Autowired
     UserService userService;
@@ -116,8 +117,8 @@ public class LandingController implements ErrorController {
     @RequestMapping("/about")
     String about() { return "app.about";    }
 
-    @RequestMapping("/error")
-    String error() { return "app.error"; }
+    ///@RequestMapping("/error")
+    //String error() { return "app.error"; }
 
     @RequestMapping("/profile")
     String profile() {
@@ -129,7 +130,16 @@ public class LandingController implements ErrorController {
         return "app.members";
     }
 
-    @Override
+    @GetMapping("/message")
+    ModelAndView messages() {
+        ModelAndView mav = new ModelAndView();
+        Person person = personService.getPerson(userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
+        List<Person> friends = personService.getFriends(person);
+        mav.addObject("friends", friends);
+        mav.setViewName("app.message");
+        return mav;
+    }
+
     public String getErrorPath() {
         return ERROR_PATH;
     }
