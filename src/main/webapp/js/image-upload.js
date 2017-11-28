@@ -15,16 +15,20 @@ $(document).ready( function() {
         }
 
     });
-    function readURL(input) {
+    function readURL(input, bool) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 
-            reader.onload = function (e) {
-                $('#img-upload').attr('src', e.target.result);
+            if(!bool){
+                reader.onload = function (e) {
+                    $('#img-upload').attr('src', e.target.result);
+                    $('#img-upload').show();
+                }
             }
-
-            reader.onload = function (e) {
-                $('#edit_profile_pic').attr('src', e.target.result);
+            else{
+                reader.onload = function (e) {
+                    $('#edit_profile_pic').attr('src', e.target.result);
+                }
             }
 
             reader.readAsDataURL(input.files[0]);
@@ -32,7 +36,12 @@ $(document).ready( function() {
     }
 
     $("#imgInp").change(function(){
-        readURL(this);
+        readURL(this, false);
     });
+
+    $("#imgInpEdit").change(function(){
+        readURL(this, true);
+    });
+
 
 });

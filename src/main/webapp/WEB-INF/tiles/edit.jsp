@@ -22,7 +22,7 @@
                     <img src="${profilePerson.profilePicID.location}" id="edit_profile_pic" class="avatar" alt="profile picture">
                     <h6>Upload a different photo...</h6>
 
-                    <input type="file" accept="image/png, image/jpeg, image/gif" id="imgInp" name="file" class="form-control"/>
+                    <input type="file" accept="image/png, image/jpeg, image/gif" id="imgInpEdit" name="file" class="form-control"/>
                 </div>
             </div>
 

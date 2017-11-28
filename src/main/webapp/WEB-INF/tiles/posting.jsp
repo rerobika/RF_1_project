@@ -20,12 +20,12 @@
 
                             <span class="col-lg-2" style="float:right;">
                                 <span class="btn btn-default btn-file">
-                                    Browse… <input type="file" accept="image/png, image/jpeg, image/gif" id="imgInp" name="file" />
+                                    Browse… <input type="file" accept="image/png, image/jpeg, image/gif" id="imgInp" name="file"/>
                                 </span>
                             </span>
                             <input type="text" class="form-control col-lg-8" readonly style="float:right; width: 65%!important; display:inline;">
 
-                        <img id='img-upload'/>
+                        <img id='img-upload' />
 
                 </div>
             </form:form>
