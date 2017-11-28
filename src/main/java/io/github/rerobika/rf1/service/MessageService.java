@@ -1,12 +1,12 @@
 package io.github.rerobika.rf1.service;
 
 import io.github.rerobika.rf1.domain.Message;
+import io.github.rerobika.rf1.domain.User;
 
 import java.util.List;
 
 public interface MessageService {
-    public List<Message> getAll();
-    public void addMessage(Message message);
-    public void removeMessage(Message message);
-    public  Message getMessage(long id);
+    List<Message> getByUser(User user);
+    Message addMessage(Message message);
+    List<Message> getConversation(User user, User partner);
 }

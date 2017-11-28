@@ -64,9 +64,3 @@
         </div>
     </div>
 </section>
-
-<footer>
-    <div class="container">
-        <p>RF I project, Social network, 2017</p>
-    </div>
-</footer>
