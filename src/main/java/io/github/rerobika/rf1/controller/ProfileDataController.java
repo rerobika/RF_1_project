@@ -53,6 +53,8 @@ public class ProfileDataController {
     NotificationService notificationService;
     @Autowired
     ClubService clubService;
+    @Autowired
+    VerificationTokenService verificationTokenService;
 
     private boolean passwordUpdateFail = false;
 
@@ -124,6 +126,7 @@ public class ProfileDataController {
         modelAndView.addObject("relation",relation);
         modelAndView.addObject("relation_status",pending);
         modelAndView.addObject("notification", notificationService.getAllByPerson(currentPerson));
+        modelAndView.addObject("invite_token", verificationTokenService.getTokenById(profilePerson.getUser().getId()));
         return modelAndView;
     }
     @PostMapping(value = "/profile/{profile_id}",params = "sendmypost")

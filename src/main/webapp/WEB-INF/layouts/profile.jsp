@@ -48,6 +48,7 @@
                                 <li><strong>Hobby:</strong> ${profilePerson.hobby.name}</li>
                                 <li><strong>DOB:</strong> ${fn:substring(profilePerson.birth, 0, 10)}</li>
                                 <li><strong>Invited by:</strong> <a href="/profile/${profilePerson.refID.id}"> ${profilePerson.refID.name} </a></li>
+                                <li><strong>Reference code :</strong> ${invite_token.token} </a></li>
                             </ul>
                         </div>
                     </div><br><br>
