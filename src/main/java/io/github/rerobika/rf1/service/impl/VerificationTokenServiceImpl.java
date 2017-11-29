@@ -14,4 +14,9 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
     public VerificationToken getTokenByName(String token){
         return verificationTokenRepository.findByToken(token);
     }
+
+    @Override
+    public VerificationToken getTokenById(long id) {
+        return verificationTokenRepository.findOne(id);
+    }
 }
