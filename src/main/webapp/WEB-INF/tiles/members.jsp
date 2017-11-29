@@ -35,7 +35,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <button type="submit" class="btn btn-default btn-block pull_down" name="confirm">Confirm friend request</button>
-                                        <input type="hidden" name="id" value="${friend.id}">
+                                        <input type="hidden" name="id" value="${friend.user.id}">
                                     </div>
                                     <div class="col-md-3">
                                         <p><a href="#" class="btn btn-default btn-block"><i class="fa fa-envelope"></i> Send Message</a></p>
